@@ -12,6 +12,13 @@ struct HomeView: View {
         ShoppingList(id: "1", name: "Lista 1", createdAt: Date()),
         ShoppingList(id: "2", name: "Lista 2", createdAt: Date())
     ]
+    @State var showSheet = false
+    @State var showDetails = false
+    @State var selectedList: ShoppingList?
+    
+    var totalItems: Int {
+        lists.count
+    }
     let columns = [
         GridItem(.flexible(), spacing: 8),
         GridItem(.flexible(), spacing: 8)
@@ -22,22 +29,43 @@ struct HomeView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(lists) { list in
-                        VStack {
+                        VStack(alignment: .leading, spacing: 25) {
                             Text(list.name)
                                 .font(.headline)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.blue.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                            HStack {
+                                Spacer()
+                                Text(totalItems.description)
+                                    .font(.caption)
+                            }
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.blue.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .onTapGesture {
+                            selectedList = list
+                            showDetails = true
                         }
                     }
                 }
                 .padding()
             }
+            .sheet(isPresented: $showSheet) {
+                NavigationStack {
+                    CreateListView()
+                }
+                .presentationDetents([.fraction(0.3)])
+                .presentationDragIndicator(.visible)
+            }
             .navigationTitle("Listas de compras")
+            .navigationDestination(isPresented: $showDetails, destination: {
+                if let selectedList {
+                    DetailListView(title: selectedList.name)
+                }
+            })
             .toolbar {
                 Button {
-                    print("quiero agregar una lista")
+                    showSheet = true
                 } label: {
                     Image(systemName: "plus")
                 }
