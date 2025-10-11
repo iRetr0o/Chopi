@@ -12,24 +12,22 @@ struct DetailListView: View {
     let title: String
     
     var body: some View {
-        VStack {
-            List {
-                HStack {
-                    Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing)
-                        .foregroundStyle(isChecked ? .green : .black)
-                        .onTapGesture {
-                            isChecked.toggle()
-                        }
-                    VStack(alignment: .leading) {
-                        Text("Nombre del prodcuto")
-                            .font(.headline)
-                            .padding(.bottom)
-                        Text("Cantidad: 10")
-                            .font(.subheadline)
+        List {
+            HStack {
+                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(.trailing)
+                    .foregroundStyle(isChecked ? .green : .black)
+                    .onTapGesture {
+                        isChecked.toggle()
                     }
+                VStack(alignment: .leading) {
+                    Text("Nombre del prodcuto")
+                        .font(.headline)
+                        .padding(.bottom)
+                    Text("Cantidad: 10")
+                        .font(.subheadline)
                 }
             }
         }
