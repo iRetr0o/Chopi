@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var lists: [ShoppingList] = [
-        ShoppingList(id: "1", name: "Lista 1", createdAt: Date()),
-        ShoppingList(id: "2", name: "Lista 2", createdAt: Date())
-    ]
+    @StateObject var viewModel: HomeViewModel
     @State var showSheet = false
     @State var showDetails = false
     @State var selectedList: ShoppingList?
     
     var totalItems: Int {
-        lists.count
+        self.viewModel.shoppingLists.count
     }
     let columns = [
         GridItem(.flexible(), spacing: 8),
@@ -28,20 +25,8 @@ struct HomeView: View {
         NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    ForEach(lists) { list in
-                        VStack(alignment: .leading, spacing: 25) {
-                            Text(list.name)
-                                .font(.headline)
-                            HStack {
-                                Spacer()
-                                Text(totalItems.description)
-                                    .font(.caption)
-                            }
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.blue.opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    ForEach(self.viewModel.shoppingLists) { list in
+                        ListCardView(name: list.name, totalItems: totalItems)
                         .onTapGesture {
                             selectedList = list
                             showDetails = true
@@ -50,11 +35,16 @@ struct HomeView: View {
                 }
                 .padding()
             }
-            .sheet(isPresented: $showSheet) {
+            .onAppear() {
+                self.viewModel.getInitialData()
+            }
+            .sheet(isPresented: $showSheet, onDismiss: {
+                self.viewModel.getInitialData()
+            }) {
                 NavigationStack {
-                    CreateListView()
+                    CreateListView(viewModel: CreateListViewModel(self.viewModel.databaseService)) { _ in }
                 }
-                .presentationDetents([.fraction(0.3)])
+                .presentationDetents([.fraction(0.4)])
                 .presentationDragIndicator(.visible)
             }
             .navigationTitle("Listas de compras")
@@ -76,5 +66,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(viewModel: HomeViewModel(MockDatabaseService()))
 }

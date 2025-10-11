@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    private let databaseService: DatabaseServiceProtocol = MockDatabaseService()
+    
     var body: some View {
         TabView {
-            HomeView()
+            HomeView(viewModel: HomeViewModel(databaseService))
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
