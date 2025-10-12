@@ -9,9 +9,6 @@ import SwiftUI
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
-    @State var showSheet = false
-    @State var showDetails = false
-    @State var selectedList: ShoppingList?
     
     let columns = [
         GridItem(.flexible(), spacing: 8),
@@ -25,8 +22,8 @@ struct HomeView: View {
                     ForEach(self.viewModel.shoppingLists) { list in
                         ListCardView(name: list.name, totalItems: list.itemCount)
                         .onTapGesture {
-                            selectedList = list
-                            showDetails = true
+                            self.viewModel.selectedList = list
+                            self.viewModel.showDetails = true
                         }
                     }
                 }
@@ -35,7 +32,7 @@ struct HomeView: View {
             .onAppear() {
                 self.viewModel.getInitialData()
             }
-            .sheet(isPresented: $showSheet, onDismiss: {
+            .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
                 self.viewModel.getInitialData()
             }) {
                 NavigationStack {
@@ -45,18 +42,17 @@ struct HomeView: View {
                 .presentationDragIndicator(.visible)
             }
             .navigationTitle("Listas de compras")
-            .navigationDestination(isPresented: $showDetails, destination: {
-                if let selectedList {
+            .navigationDestination(isPresented: self.$viewModel.showDetails, destination: {
+                if let selectedList = self.viewModel.selectedList {
                     DetailListView(viewModel: DetailListViewModel(self.viewModel.databaseService, shoppingList: selectedList))
                 }
             })
             .toolbar {
                 Button {
-                    showSheet = true
+                    self.viewModel.showSheet = true
                 } label: {
                     Image(systemName: "plus")
                 }
-
             }
         }
     }

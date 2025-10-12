@@ -9,15 +9,15 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     @Published var loading = false
-    @Published var title: String = ""
+    @Published var showSheet = false
+    @Published var showDetails = false
     
+    var selectedList: ShoppingList?
     var shoppingLists: [ShoppingList] = []
-    let shoppingList: ShoppingList?
     let databaseService: DatabaseServiceProtocol
     
-    init(_ databaseService: DatabaseServiceProtocol, shoppingList: ShoppingList? = nil) {
+    init(_ databaseService: DatabaseServiceProtocol) {
         self.databaseService = databaseService
-        self.shoppingList = shoppingList
     }
     
     func getInitialData() {
