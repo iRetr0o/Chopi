@@ -42,7 +42,7 @@ struct HomeView: View {
                 self.viewModel.getInitialData()
             }) {
                 NavigationStack {
-                    CreateListView(viewModel: CreateListViewModel(self.viewModel.databaseService)) { _ in }
+                    CreateListView(viewModel: CreateListViewModel(self.viewModel.databaseService))
                 }
                 .presentationDetents([.fraction(0.4)])
                 .presentationDragIndicator(.visible)

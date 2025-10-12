@@ -11,9 +11,7 @@ struct CreateListView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: CreateListViewModel
     private let characterLimit = 50
-    
-    let completion: (ShoppingList?) -> Void
-    
+        
     var body: some View {
         VStack(alignment: .leading) {
             Text("Nombre de la lista")
@@ -27,8 +25,7 @@ struct CreateListView: View {
                 }
             Spacer()
             Button {
-                self.viewModel.saveNewList { shoppingList in
-                    self.completion(shoppingList)
+                self.viewModel.saveNewList {
                     dismiss()
                 }
             } label: {
@@ -48,5 +45,5 @@ struct CreateListView: View {
 }
 
 #Preview {
-    CreateListView(viewModel: CreateListViewModel(MockDatabaseService())) { _ in }
+    CreateListView(viewModel: CreateListViewModel(MockDatabaseService()))
 }

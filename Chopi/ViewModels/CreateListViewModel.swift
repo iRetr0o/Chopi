@@ -21,7 +21,7 @@ class CreateListViewModel: ObservableObject {
         return !name.isEmpty
     }
     
-    func saveNewList(completion: @escaping (ShoppingList?) -> Void) {
+    func saveNewList(completion: @escaping () -> Void) {
         self.loading = true
         let listToSave = ShoppingList(id: UUID().uuidString, name: name, createdAt: Date())
         Task {
@@ -29,7 +29,7 @@ class CreateListViewModel: ObservableObject {
             if saved {
                 await MainActor.run {
                     self.loading = false
-                    completion(nil)
+                    completion()
                 }
             } else {
                 // TODO: Mostrar un error
