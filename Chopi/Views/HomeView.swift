@@ -13,9 +13,6 @@ struct HomeView: View {
     @State var showDetails = false
     @State var selectedList: ShoppingList?
     
-    var totalItems: Int {
-        self.viewModel.shoppingLists.count
-    }
     let columns = [
         GridItem(.flexible(), spacing: 8),
         GridItem(.flexible(), spacing: 8)
@@ -26,7 +23,7 @@ struct HomeView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(self.viewModel.shoppingLists) { list in
-                        ListCardView(name: list.name, totalItems: totalItems)
+                        ListCardView(name: list.name, totalItems: list.itemCount)
                         .onTapGesture {
                             selectedList = list
                             showDetails = true

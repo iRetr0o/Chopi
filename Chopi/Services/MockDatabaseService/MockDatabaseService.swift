@@ -9,8 +9,8 @@ import Foundation
 
 class MockDatabaseService: DatabaseServiceProtocol {
     var fetchListsResult: [ShoppingList] = [
-        ShoppingList(id: "1", name: "Lista 1", createdAt: Date()),
-        ShoppingList(id: "2", name: "Lista 2", createdAt: Date())
+        ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 2),
+        ShoppingList(id: "2", name: "Lista 2", createdAt: Date(), itemCount: 1)
     ]
     
     var saveListResult: Bool = true
@@ -22,7 +22,6 @@ class MockDatabaseService: DatabaseServiceProtocol {
     }
     
     func saveList(_ list: ShoppingList) async -> Bool {
-        fetchListsResult.append(list)
         return saveListResult
     }
     

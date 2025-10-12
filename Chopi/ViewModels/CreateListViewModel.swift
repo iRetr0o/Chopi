@@ -23,7 +23,7 @@ class CreateListViewModel: ObservableObject {
     
     func saveNewList(completion: @escaping () -> Void) {
         self.loading = true
-        let listToSave = ShoppingList(id: UUID().uuidString, name: name, createdAt: Date())
+        let listToSave = ShoppingList(id: UUID().uuidString, name: name, createdAt: Date(), itemCount: 0)
         Task {
             let saved = await self.databaseService.saveList(listToSave)
             if saved {
