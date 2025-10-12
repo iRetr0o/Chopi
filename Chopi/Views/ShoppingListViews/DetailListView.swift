@@ -8,34 +8,38 @@
 import SwiftUI
 
 struct DetailListView: View {
-    @State private var isChecked = false
-    let title: String
+    @StateObject var viewModel: DetailListViewModel
     
     var body: some View {
         List {
-            HStack {
-                Image(systemName: isChecked ? "checkmark.circle.fill" : "circle")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .padding(.trailing)
-                    .foregroundStyle(isChecked ? .green : .black)
-                    .onTapGesture {
-                        isChecked.toggle()
+            ForEach(self.viewModel.items) { item in
+                HStack {
+                    Image(systemName: item.isPurchased ? "checkmark.circle.fill" : "circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing)
+                        .foregroundStyle(item.isPurchased ? .green : .black)
+                        .onTapGesture {
+                            self.viewModel.updateItemStatus(for: item)
+                        }
+                    VStack(alignment: .leading) {
+                        Text("Nombre del prodcuto")
+                            .font(.headline)
+                            .padding(.bottom)
+                        Text("Cantidad: 10")
+                            .font(.subheadline)
                     }
-                VStack(alignment: .leading) {
-                    Text("Nombre del prodcuto")
-                        .font(.headline)
-                        .padding(.bottom)
-                    Text("Cantidad: 10")
-                        .font(.subheadline)
                 }
             }
         }
-        .navigationTitle(title)
+        .navigationTitle(self.viewModel.shoppingList.name)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            self.viewModel.getInitialData()
+        }
     }
 }
 
 #Preview {
-    DetailListView(title: "Lista 1")
+    DetailListView(viewModel: DetailListViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0)))
 }

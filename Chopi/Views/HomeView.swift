@@ -47,7 +47,7 @@ struct HomeView: View {
             .navigationTitle("Listas de compras")
             .navigationDestination(isPresented: $showDetails, destination: {
                 if let selectedList {
-                    DetailListView(title: selectedList.name)
+                    DetailListView(viewModel: DetailListViewModel(self.viewModel.databaseService, shoppingList: selectedList))
                 }
             })
             .toolbar {
