@@ -13,9 +13,18 @@ class MockDatabaseService: DatabaseServiceProtocol {
         ShoppingList(id: "2", name: "Lista 2", createdAt: Date(), itemCount: 1)
     ]
     
+    var fetchItemsResult: [Item] = [
+        Item(id: "1", name: "Producto 1", quantity: 5, isPurchased: false, createdAt: Date(), listId: "1"),
+        Item(id: "2", name: "Producto 2", quantity: 1, isPurchased: true, createdAt: Date(), listId: "1"),
+        Item(id: "2", name: "Producto 2", quantity: 1, isPurchased: true, createdAt: Date(), listId: "2")
+    ]
+    
     var saveListResult: Bool = true
     var updateListResult: Bool = true
     var deleteListResult: Bool = true
+    var saveItemResult: Bool = true
+    var updateItemResult: Bool = true
+    var deleteItemResult: Bool = true
     
     func fetchLists() async -> [ShoppingList] {
         return fetchListsResult
@@ -31,6 +40,22 @@ class MockDatabaseService: DatabaseServiceProtocol {
     
     func deleteList(_ list: ShoppingList) async -> Bool {
         return deleteListResult
+    }
+    
+    func fetchItems() async -> [Item] {
+        return fetchItemsResult
+    }
+    
+    func saveItem(_ item: Item) async -> Bool {
+        return saveItemResult
+    }
+    
+    func updateItem(_ item: Item) async -> Bool {
+        return updateItemResult
+    }
+    
+    func deleteItem(_ item: Item) async -> Bool {
+        return deleteItemResult
     }
     
     
