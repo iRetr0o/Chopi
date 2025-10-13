@@ -13,30 +13,16 @@ struct DetailListView: View {
     var body: some View {
         List {
             ForEach(self.viewModel.items) { item in
-                HStack {
-                    Image(systemName: item.isPurchased ? "checkmark.circle.fill" : "circle")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing)
-                        .foregroundStyle(item.isPurchased ? .green : .black)
-                        .onTapGesture {
-                            self.viewModel.updateItemStatus(for: item)
-                        }
-                    VStack(alignment: .leading) {
-                        Text("Nombre del prodcuto")
-                            .font(.headline)
-                            .padding(.bottom)
-                        Text("Cantidad: 10")
-                            .font(.subheadline)
-                    }
+                ItemCardView(isPurchased: item.isPurchased, name: item.name, quantity: item.quantity) {
+                    self.viewModel.updateItemStatus(for: item)
                 }
             }
         }
-        .navigationTitle(self.viewModel.shoppingList.name)
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             self.viewModel.getInitialData()
         }
+        .navigationTitle(self.viewModel.shoppingList.name)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
