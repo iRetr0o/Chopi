@@ -57,6 +57,4 @@ class MockDatabaseService: DatabaseServiceProtocol {
     func deleteItem(_ item: Item) async -> Bool {
         return deleteItemResult
     }
-    
-    
 }

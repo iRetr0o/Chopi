@@ -7,6 +7,7 @@
 
 import Foundation
 
-protocol ToShoppingListProtocol {
+protocol ToModelProtocol {
     func toShoppingList() -> ShoppingList
+    func toItem() -> Item
 }
