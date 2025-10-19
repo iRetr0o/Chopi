@@ -11,12 +11,7 @@ struct ContentView: View {
     private let databaseService: DatabaseServiceProtocol = MockDatabaseService()
     
     var body: some View {
-        TabView {
-            HomeView(viewModel: HomeViewModel(databaseService))
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
-                }
-        }
+        HomeView(viewModel: HomeViewModel(databaseService))
     }
 }
 
