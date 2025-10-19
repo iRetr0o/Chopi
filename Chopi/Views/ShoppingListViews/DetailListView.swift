@@ -23,6 +23,18 @@ struct DetailListView: View {
         }
         .navigationTitle(self.viewModel.shoppingList.name)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: self.$viewModel.showDetails, destination: {
+            FormItemView(viewModel: FormItemViewModel(self.viewModel.databaseService, shoppingList: self.viewModel.shoppingList))
+        })
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    self.viewModel.showDetails = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 
 class DetailListViewModel: ObservableObject {
     @Published var loading: Bool = false
+    @Published var showDetails: Bool = false
     
     var items: [Item] = []
     var shoppingList: ShoppingList
