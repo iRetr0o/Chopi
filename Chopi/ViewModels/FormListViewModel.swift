@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CreateListViewModel: ObservableObject {
+class FormListViewModel: ObservableObject {
     @Published var loading = false
     @Published var name: String = ""
     

@@ -36,7 +36,7 @@ struct HomeView: View {
                 self.viewModel.getInitialData()
             }) {
                 NavigationStack {
-                    CreateListView(viewModel: CreateListViewModel(self.viewModel.databaseService))
+                    FormListView(viewModel: FormListViewModel(self.viewModel.databaseService))
                 }
                 .presentationDetents([.fraction(0.4)])
                 .presentationDragIndicator(.visible)

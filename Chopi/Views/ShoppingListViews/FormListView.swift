@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CreateListView: View {
+struct FormListView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject var viewModel: CreateListViewModel
+    @StateObject var viewModel: FormListViewModel
     private let characterLimit = 50
         
     var body: some View {
@@ -45,5 +45,5 @@ struct CreateListView: View {
 }
 
 #Preview {
-    CreateListView(viewModel: CreateListViewModel(MockDatabaseService()))
+    FormListView(viewModel: FormListViewModel(MockDatabaseService()))
 }
