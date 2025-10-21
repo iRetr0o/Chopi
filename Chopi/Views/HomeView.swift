@@ -17,30 +17,7 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(self.viewModel.shoppingLists) { list in
-                        ListCardView(name: list.name, totalItems: list.itemCount, date: list.createdAt)
-                        .onTapGesture {
-                            self.viewModel.selectedList = list
-                            self.viewModel.showDetails = true
-                        }
-                    }
-                }
-                .padding()
-            }
-            .onAppear() {
-                self.viewModel.getInitialData()
-            }
-            .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
-                self.viewModel.getInitialData()
-            }) {
-                NavigationStack {
-                    FormListView(viewModel: FormListViewModel(self.viewModel.databaseService))
-                }
-                .presentationDetents([.fraction(0.4)])
-                .presentationDragIndicator(.visible)
-            }
+            homeScreen
             .navigationTitle("Listas de compras")
             .navigationDestination(isPresented: self.$viewModel.showDetails, destination: {
                 if let selectedList = self.viewModel.selectedList {
@@ -53,6 +30,52 @@ struct HomeView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+            }
+        }
+        .onAppear() {
+            self.viewModel.getInitialData()
+        }
+        .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
+            self.viewModel.getInitialData()
+        }) {
+            NavigationStack {
+                FormListView(viewModel: FormListViewModel(self.viewModel.databaseService))
+            }
+            .presentationDetents([.fraction(0.4)])
+            .presentationDragIndicator(.visible)
+        }
+    }
+    
+    @ViewBuilder
+    private var homeScreen: some View {
+        if self.viewModel.loading {
+            LoadingView()
+        } else if self.viewModel.shoppingLists.isEmpty {
+            VStack {
+                Image(systemName: "list.bullet.clipboard")
+                    .resizable()
+                    .frame(width: 100, height: 150)
+                    .padding(.bottom)
+                Text("Aun no tienes listas, inteta")
+                Button {
+                    self.viewModel.showSheet = true
+                } label: {
+                    Text("Crear una nueva lista")
+                }
+            }
+            .padding(.bottom)
+        } else {
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(self.viewModel.shoppingLists) { list in
+                        ListCardView(name: list.name, totalItems: list.itemCount, date: list.createdAt)
+                            .onTapGesture {
+                                self.viewModel.selectedList = list
+                                self.viewModel.showDetails = true
+                            }
+                    }
+                }
+                .padding()
             }
         }
     }
