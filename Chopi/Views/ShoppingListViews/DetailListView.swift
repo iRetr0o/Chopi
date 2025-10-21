@@ -14,7 +14,8 @@ struct DetailListView: View {
         List {
             ForEach(self.viewModel.items) { item in
                 ItemCardView(isPurchased: item.isPurchased, name: item.name, quantity: item.quantity) {
-                    self.viewModel.updateItemStatus(for: item)
+                    self.viewModel.item = item
+                    self.viewModel.updateItemStatus()
                 }
             }
         }

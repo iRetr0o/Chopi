@@ -12,7 +12,8 @@ class DetailListViewModel: ObservableObject {
     @Published var showDetails: Bool = false
     
     var items: [Item] = []
-    var shoppingList: ShoppingList
+    var item: Item?
+    let shoppingList: ShoppingList
     let databaseService: DatabaseServiceProtocol
     
     init(_ databaseService: DatabaseServiceProtocol, shoppingList: ShoppingList) {
@@ -34,7 +35,8 @@ class DetailListViewModel: ObservableObject {
         }
     }
     
-    func updateItemStatus(for item: Item) {
+    func updateItemStatus() {
+        guard let item else { return }
         let updatedItem = Item(id: item.id, name: item.name, quantity: item.quantity, isPurchased: !item.isPurchased, createdAt: item.createdAt, listId: item.listId)
         
         if let index = self.items.firstIndex(where: { $0.id == item.id }) {
