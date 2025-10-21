@@ -21,12 +21,12 @@ struct FormItemView: View {
             Divider()
             HStack {
                 Text("Cantidad:")
-                Spacer()
                 Picker("Cantidad", selection: self.$viewModel.quantity) {
                     ForEach(1..<51, id: \.self) { number in
                         Text("\(number)")
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
             Toggle(isOn: self.$viewModel.isPurchased) {
                 Text("Comprado:")
