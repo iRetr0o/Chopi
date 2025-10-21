@@ -74,20 +74,62 @@ class SDDatabaseService: DatabaseServiceProtocol {
         }
     }
     
-    func fetchItems() async -> [Item] {
-        return []
+    func fetchItems(for listId: String) async -> [Item] {
+        let predicate = #Predicate<SDItem> { $0.list.id == listId }
+        let descriptor = FetchDescriptor<SDItem>(predicate: predicate)
+        do {
+            let sdItems = try context.fetch(descriptor)
+            return sdItems.map { $0.toItem() }
+        } catch {
+            return []
+        }
     }
     
-    func saveItem(_ item: Item) async -> Bool {
-        return false
+    func saveItem(for listId: String, item: Item) async -> Bool {
+        let predicate = #Predicate<SDShoppingList> { $0.id == listId }
+        let descriptor = FetchDescriptor<SDShoppingList>(predicate: predicate)
+        
+        do {
+            guard let sdList = try context.fetch(descriptor).first else { return false }
+            let sdItem = SDItem(id: item.id, name: item.name, quantity: item.quantity, isPurchased: item.isPurchased, createdAt: item.createdAt, list: sdList)
+            context.insert(sdItem)
+            try context.save()
+            return true
+        } catch {
+            return false
+        }
     }
     
     func updateItem(_ item: Item) async -> Bool {
-        return false
+        let id = item.id
+        let predicate = #Predicate<SDItem> { $0.id == id }
+        let descriptor = FetchDescriptor<SDItem>(predicate: predicate)
+        do {
+            guard let existingItem = try context.fetch(descriptor).first else {
+                return false
+            }
+            existingItem.name = item.name
+            existingItem.quantity = item.quantity
+            existingItem.isPurchased = item.isPurchased
+            try context.save()
+            return true
+        } catch {
+            return false
+        }
     }
     
     func deleteItem(_ item: Item) async -> Bool {
-        return false
+        let id = item.id
+        let predicate = #Predicate<SDItem> { $0.id == id }
+        let descriptor = FetchDescriptor<SDItem>(predicate: predicate)
+        do {
+            guard let existingItem = try context.fetch(descriptor).first else { return false }
+            context.delete(existingItem)
+            try context.save()
+            return true
+        } catch {
+            return false
+        }
     }
     
 }

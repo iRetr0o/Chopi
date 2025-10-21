@@ -27,8 +27,7 @@ class DetailListViewModel: ObservableObject {
     func getItems() {
         self.loading = true
         Task {
-            let allItems = await self.databaseService.fetchItems()
-            self.items = allItems.filter({ $0.listId == self.shoppingList.id })
+            self.items = await self.databaseService.fetchItems(for: shoppingList.id)
             await MainActor.run {
                 self.loading = false
             }

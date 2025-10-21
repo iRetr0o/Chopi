@@ -20,7 +20,6 @@ class SDShoppingList {
         self.name = name
         self.createdAt = createdAt
     }
-
 }
 
 extension SDShoppingList: ToShoppingListProtocol {

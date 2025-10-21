@@ -42,11 +42,11 @@ class MockDatabaseService: DatabaseServiceProtocol {
         return deleteListResult
     }
     
-    func fetchItems() async -> [Item] {
-        return fetchItemsResult
+    func fetchItems(for listId: String) async -> [Item] {
+        return fetchItemsResult.filter { $0.listId == listId }
     }
     
-    func saveItem(_ item: Item) async -> Bool {
+    func saveItem(for listId: String, item: Item) async -> Bool {
         return saveItemResult
     }
     
