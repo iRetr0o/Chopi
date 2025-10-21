@@ -20,7 +20,7 @@ struct HomeView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(self.viewModel.shoppingLists) { list in
-                        ListCardView(name: list.name, totalItems: list.itemCount)
+                        ListCardView(name: list.name, totalItems: list.itemCount, date: list.createdAt)
                         .onTapGesture {
                             self.viewModel.selectedList = list
                             self.viewModel.showDetails = true

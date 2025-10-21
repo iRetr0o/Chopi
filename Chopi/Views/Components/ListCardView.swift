@@ -10,13 +10,16 @@ import SwiftUI
 struct ListCardView: View {
     let name: String
     let totalItems: Int
+    let date: Date
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
             Text(name)
                 .font(.headline)
             HStack {
-                Spacer()
                 Text(totalItems.description)
+                    .font(.callout)
+                Spacer()
+                Text(date.formatted(date: .abbreviated, time: .omitted))
                     .font(.caption)
             }
         }
@@ -28,5 +31,5 @@ struct ListCardView: View {
 }
 
 #Preview {
-    ListCardView(name: "Lista 1", totalItems: 5)
+    ListCardView(name: "Lista 1", totalItems: 5, date: Date())
 }
