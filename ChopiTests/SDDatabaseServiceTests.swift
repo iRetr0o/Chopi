@@ -1,0 +1,45 @@
+//
+//  SDDatabaseServiceTests.swift
+//  ChopiTests
+//
+//  Created by Oscar Gutierrez on 21/10/25.
+//
+
+import XCTest
+@testable import Chopi
+
+final class SDDatabaseServiceTests: XCTestCase {
+    var databaseService: SDDatabaseService!
+    
+    override func setUp() {
+        super.setUp()
+        let expectation = XCTestExpectation(description: "Wait for database to load")
+        
+        Task { @MainActor in
+            self.databaseService = SDDatabaseService()
+            await self.clearDatabase()
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 2.0)
+    }
+    
+    override func tearDown() {
+        self.databaseService = nil
+        super.tearDown()
+    }
+    
+    func testFetchLists() async {
+        let list = ShoppingList(id: UUID().uuidString, name: "Fetch List", createdAt: Date(), itemCount: 0)
+        _ = await self.databaseService.saveList(list)
+        
+        let fetchedList = await self.databaseService.fetchLists()
+        XCTAssertGreaterThan(fetchedList.count, 0, "There should be at least one shopping list fetched")
+    }
+    
+    private func clearDatabase() async {
+        let allList = await databaseService.fetchLists()
+        for list in allList {
+            _ = await self.databaseService.deleteList(list)
+        }
+    }
+}
