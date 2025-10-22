@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		F4B41FB72EA831B4003066A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F454A50D2E89D5190003368E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F454A5142E89D5190003368E;
+			remoteInfo = Chopi;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		F454A5152E89D5190003368E /* Chopi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chopi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4B41FB32EA831B4003066A1 /* ChopiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChopiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = Chopi;
 			sourceTree = "<group>";
 		};
+		F4B41FB42EA831B4003066A1 /* ChopiTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ChopiTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F454A5122E89D5190003368E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4B41FB02EA831B4003066A1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				F454A5172E89D5190003368E /* Chopi */,
+				F4B41FB42EA831B4003066A1 /* ChopiTests */,
 				F454A5162E89D5190003368E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				F454A5152E89D5190003368E /* Chopi.app */,
+				F4B41FB32EA831B4003066A1 /* ChopiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = F454A5152E89D5190003368E /* Chopi.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F4B41FB22EA831B4003066A1 /* ChopiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4B41FBB2EA831B4003066A1 /* Build configuration list for PBXNativeTarget "ChopiTests" */;
+			buildPhases = (
+				F4B41FAF2EA831B4003066A1 /* Sources */,
+				F4B41FB02EA831B4003066A1 /* Frameworks */,
+				F4B41FB12EA831B4003066A1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4B41FB82EA831B4003066A1 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F4B41FB42EA831B4003066A1 /* ChopiTests */,
+			);
+			name = ChopiTests;
+			packageProductDependencies = (
+			);
+			productName = ChopiTests;
+			productReference = F4B41FB32EA831B4003066A1 /* ChopiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -77,11 +125,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1640;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					F454A5142E89D5190003368E = {
 						CreatedOnToolsVersion = 16.4;
+					};
+					F4B41FB22EA831B4003066A1 = {
+						CreatedOnToolsVersion = 26.0.1;
+						TestTargetID = F454A5142E89D5190003368E;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				F454A5142E89D5190003368E /* Chopi */,
+				F4B41FB22EA831B4003066A1 /* ChopiTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F454A5132E89D5190003368E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4B41FB12EA831B4003066A1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F4B41FAF2EA831B4003066A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F4B41FB82EA831B4003066A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F454A5142E89D5190003368E /* Chopi */;
+			targetProxy = F4B41FB72EA831B4003066A1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F454A51E2E89D51C0003368E /* Debug */ = {
@@ -304,6 +379,50 @@
 			};
 			name = Release;
 		};
+		F4B41FB92EA831B4003066A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4BDDL3G753;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oscargtz.ChopiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chopi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chopi";
+			};
+			name = Debug;
+		};
+		F4B41FBA2EA831B4003066A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4BDDL3G753;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oscargtz.ChopiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chopi.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Chopi";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -321,6 +440,15 @@
 			buildConfigurations = (
 				F454A5212E89D51C0003368E /* Debug */,
 				F454A5222E89D51C0003368E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4B41FBB2EA831B4003066A1 /* Build configuration list for PBXNativeTarget "ChopiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4B41FB92EA831B4003066A1 /* Debug */,
+				F4B41FBA2EA831B4003066A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
