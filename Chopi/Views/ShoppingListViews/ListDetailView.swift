@@ -1,5 +1,5 @@
 //
-//  DetailListView.swift
+//  ListDetailView.swift
 //  Chopi
 //
 //  Created by Oscar Gutierrez on 29/09/25.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct DetailListView: View {
-    @StateObject var viewModel: DetailListViewModel
+struct ListDetailView: View {
+    @StateObject var viewModel: ListDetailViewModel
     
     var body: some View {
         List {
@@ -40,5 +40,5 @@ struct DetailListView: View {
 }
 
 #Preview {
-    DetailListView(viewModel: DetailListViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0)))
+    ListDetailView(viewModel: ListDetailViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0)))
 }
