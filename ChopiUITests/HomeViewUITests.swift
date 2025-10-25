@@ -21,4 +21,11 @@ final class HomeViewUITests: XCTestCase {
         app = nil
     }
 
+    func testHomeView_ElementsExist() {
+        let addListButton = app.buttons["AddListButton"]
+        XCTAssertTrue(addListButton.exists)
+        
+        let listElement = app.staticTexts["ListElement"]
+        XCTAssertTrue(listElement.exists)
+    }
 }
