@@ -24,8 +24,15 @@ final class HomeViewUITests: XCTestCase {
     func testHomeView_ElementsExist() {
         let addListButton = app.buttons["AddListButton"]
         XCTAssertTrue(addListButton.exists)
+    }
+    
+    func testAddList_ShowFormListView() {
+        let addListButton = app.buttons["AddListButton"]
+        XCTAssertTrue(addListButton.exists)
         
-        let listElement = app.staticTexts["ListElement"]
-        XCTAssertTrue(listElement.exists)
+        addListButton.tap()
+        
+        let newListSheet = app.staticTexts["FormListTitle"]
+        XCTAssertTrue(newListSheet.waitForExistence(timeout: 3.0))
     }
 }

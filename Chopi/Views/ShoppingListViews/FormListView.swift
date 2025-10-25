@@ -17,6 +17,7 @@ struct FormListView: View {
             Text("Nombre de la lista")
                 .font(.headline)
                 .padding(.bottom)
+                .accessibilityIdentifier("FormListTitle")
             TextField("Despensa", text: self.$viewModel.name)
                 .onChange(of: self.viewModel.name) {
                     if self.viewModel.name.count > characterLimit {
@@ -37,6 +38,7 @@ struct FormListView: View {
                     .background(RoundedRectangle(cornerRadius: 10).fill(self.viewModel.isButtonDisabled ?  Color.blue : Color.gray.opacity(0.2)))
             }
             .disabled(!self.viewModel.isButtonDisabled)
+            .accessibilityIdentifier("SaveListButton")
         }
         .navigationTitle("Crear nueva lista")
         .navigationBarTitleDisplayMode(.inline)
