@@ -34,6 +34,7 @@ struct ListDetailView: View {
                 } label: {
                     Label("Agregar prodcuto", systemImage: "plus")
                 }
+                .accessibilityIdentifier("AddItemButton")
             }
         }
     }

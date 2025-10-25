@@ -35,4 +35,14 @@ final class HomeViewUITests: XCTestCase {
         let newListSheet = app.staticTexts["FormListTitle"]
         XCTAssertTrue(newListSheet.waitForExistence(timeout: 3.0))
     }
+    
+    func testNavigationToListDetail() {
+        let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
+        XCTAssertTrue(firstList.exists)
+        
+        firstList.tap()
+        
+        let detailView = app.buttons["AddItemButton"]
+        XCTAssertTrue(detailView.waitForExistence(timeout: 3.0))
+    }
 }
