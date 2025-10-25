@@ -15,7 +15,7 @@ struct ListCardView: View {
         VStack(alignment: .leading, spacing: 25) {
             Text(name)
                 .font(.headline)
-            HStack {
+            HStack(alignment: .center) {
                 Text(totalItems.description)
                     .font(.callout)
                 Spacer()
