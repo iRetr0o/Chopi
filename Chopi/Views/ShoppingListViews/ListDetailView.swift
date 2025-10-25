@@ -32,7 +32,7 @@ struct ListDetailView: View {
                 Button {
                     self.viewModel.showDetails = true
                 } label: {
-                    Image(systemName: "plus")
+                    Label("Agregar prodcuto", systemImage: "plus")
                 }
             }
         }
@@ -40,5 +40,7 @@ struct ListDetailView: View {
 }
 
 #Preview {
-    ListDetailView(viewModel: ListDetailViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0)))
+    NavigationStack {
+        ListDetailView(viewModel: ListDetailViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0)))
+    }
 }

@@ -28,7 +28,7 @@ struct HomeView: View {
                 Button {
                     self.viewModel.showSheet = true
                 } label: {
-                    Image(systemName: "plus")
+                    Label("Agregar lista", systemImage: "plus")
                 }
                 .accessibilityIdentifier("AddListButton")
             }
