@@ -29,7 +29,7 @@ struct FormListView: View {
                     dismiss()
                 }
             } label: {
-                Text("Guardar")
+                Label("Guardar Lista", systemImage: "square.and.pencil")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
@@ -45,5 +45,7 @@ struct FormListView: View {
 }
 
 #Preview {
-    FormListView(viewModel: FormListViewModel(MockDatabaseService()))
+    NavigationStack {
+        FormListView(viewModel: FormListViewModel(MockDatabaseService()))
+    }
 }

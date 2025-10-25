@@ -37,7 +37,7 @@ struct FormItemView: View {
                     dismiss()
                 }
             } label: {
-                Text("Guardar")
+                Label("Guardar", systemImage: "square.and.pencil")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
