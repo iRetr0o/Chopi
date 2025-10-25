@@ -30,6 +30,7 @@ struct HomeView: View {
                 } label: {
                     Image(systemName: "plus")
                 }
+                .accessibilityIdentifier("AddListButton")
             }
         }
         .onAppear() {
@@ -73,6 +74,7 @@ struct HomeView: View {
                                 self.viewModel.selectedList = list
                                 self.viewModel.showDetails = true
                             }
+                            .accessibilityIdentifier("ListElement")
                     }
                 }
                 .padding()

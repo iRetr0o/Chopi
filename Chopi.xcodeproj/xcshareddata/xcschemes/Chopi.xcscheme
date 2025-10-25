@@ -41,6 +41,17 @@
                ReferencedContainer = "container:Chopi.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F4BB244F2EAC9C8500D1697A"
+               BuildableName = "ChopiUITests.xctest"
+               BlueprintName = "ChopiUITests"
+               ReferencedContainer = "container:Chopi.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -8,7 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let databaseService: DatabaseServiceProtocol = MockDatabaseService()
+    private let databaseService: DatabaseServiceProtocol
+    
+    init() {
+        if ProcessInfo.processInfo.arguments.contains("-UITests") {
+            self.databaseService = MockDatabaseService()
+        } else {
+            self.databaseService = SDDatabaseService()
+        }
+    }
     
     var body: some View {
         HomeView(viewModel: HomeViewModel(databaseService))
