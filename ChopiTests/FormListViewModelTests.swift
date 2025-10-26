@@ -26,6 +26,33 @@ final class FormListViewModelTests: XCTestCase {
         super.tearDown()
     }
     
+    func testValidateName_truncatesNameWhenExceedsCharacterLimit() {
+        viewModel = FormListViewModel(StubDatabaseService())
+        viewModel.name = String(repeating: "a", count: 60)
+        viewModel.validateName()
+        
+        XCTAssertEqual(viewModel.name.count, 50)
+    }
+    
+    func testValidateName_doesNotModifyNameWhenWithinCharacterLimit() {
+        viewModel = FormListViewModel(StubDatabaseService())
+        let originalName = "Valid Name"
+        viewModel.name = originalName
+        viewModel.validateName()
+        
+        XCTAssertEqual(viewModel.name, originalName)
+        XCTAssertEqual(viewModel.name.count, 10)
+    }
+    
+    func testValidateName_handlesEmptyNamesCorrectly() {
+        viewModel = FormListViewModel(StubDatabaseService())
+        viewModel.name = ""
+        viewModel.validateName()
+        
+        XCTAssertEqual(viewModel.name, "")
+        XCTAssertEqual(viewModel.name.count, 0)
+    }
+    
     func testSaveNewList() async {
         viewModel = FormListViewModel(mockDatabaseService)
         viewModel.name = "Test List"
