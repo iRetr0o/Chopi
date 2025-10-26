@@ -12,6 +12,7 @@ class FormListViewModel: ObservableObject {
     @Published var name: String = ""
     
     let databaseService: DatabaseServiceProtocol
+    private let characterLimit: Int = 50
     
     init(_ databaseService: DatabaseServiceProtocol) {
         self.databaseService = databaseService
@@ -19,6 +20,12 @@ class FormListViewModel: ObservableObject {
     
     var isButtonDisabled: Bool {
         return !name.isEmpty
+    }
+    
+    func validateName() {
+        if name.count > characterLimit {
+            name = String(name.prefix(characterLimit))
+        }
     }
     
     func saveNewList(completion: @escaping () -> Void) {

@@ -10,7 +10,6 @@ import SwiftUI
 struct FormListView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: FormListViewModel
-    private let characterLimit = 50
         
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,9 +19,7 @@ struct FormListView: View {
                 .accessibilityIdentifier("FormListTitle")
             TextField("Despensa", text: self.$viewModel.name)
                 .onChange(of: self.viewModel.name) {
-                    if self.viewModel.name.count > characterLimit {
-                        self.viewModel.name = String(self.viewModel.name.prefix(characterLimit))
-                    }
+                    self.viewModel.validateName()
                 }
             Spacer()
             Button {
