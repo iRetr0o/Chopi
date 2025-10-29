@@ -33,7 +33,9 @@ final class HomeViewUITests: XCTestCase {
         addListButton.tap()
         
         let newListSheet = app.staticTexts["FormListTitle"]
+        let saveListButton = app.buttons["SaveListButton"]
         XCTAssertTrue(newListSheet.waitForExistence(timeout: 3.0))
+        XCTAssertTrue(saveListButton.waitForExistence(timeout: 3.0))
     }
     
     func testNavigationToListDetail() {
