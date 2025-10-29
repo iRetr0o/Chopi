@@ -37,7 +37,7 @@ struct FormListView: View {
             .disabled(!self.viewModel.isButtonDisabled)
             .accessibilityIdentifier("SaveListButton")
         }
-        .navigationTitle("Crear nueva lista")
+        .navigationTitle(self.viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .padding()
     }
