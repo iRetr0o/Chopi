@@ -36,8 +36,11 @@ class ListDetailViewModel: ObservableObject {
     }
     
     func updateItemStatus() {
-        guard let item else { return }
-        guard let index = self.items.firstIndex(where:  { $0.id == item.id }) else { return }
+        guard
+            let item,
+            let index = self.items.firstIndex(where: { $0.id == item.id })
+        else { return }
+        self.loading = true
         
         let updatedItem = Item(id: item.id, name: item.name, quantity: item.quantity, isPurchased: !item.isPurchased, createdAt: item.createdAt, listId: item.listId)
     
@@ -46,7 +49,9 @@ class ListDetailViewModel: ObservableObject {
         Task {
             let saved = await self.databaseService.updateItem(updatedItem)
             if saved {
-                self.loading = false
+                await MainActor.run {
+                    self.loading = false
+                }
             }
         }
     }
