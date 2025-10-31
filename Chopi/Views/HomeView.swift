@@ -22,6 +22,9 @@ struct HomeView: View {
             .navigationDestination(isPresented: self.$viewModel.showDetails, destination: {
                 if let selectedList = self.viewModel.selectedList {
                     ListDetailView(viewModel: ListDetailViewModel(self.viewModel.databaseService, shoppingList: selectedList))
+                        .onDisappear {
+                            self.viewModel.selectedList = nil
+                        }
                 }
             })
             .toolbar {
@@ -37,10 +40,11 @@ struct HomeView: View {
             self.viewModel.getInitialData()
         }
         .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
+            self.viewModel.selectedList = nil
             self.viewModel.getInitialData()
         }) {
             NavigationStack {
-                FormListView(viewModel: FormListViewModel(self.viewModel.databaseService))
+                FormListView(viewModel: FormListViewModel(self.viewModel.databaseService, shoppingList: self.viewModel.selectedList))
             }
             .presentationDetents([.fraction(0.4)])
             .presentationDragIndicator(.visible)
@@ -77,6 +81,13 @@ struct HomeView: View {
                                 .accessibilityIdentifier("List_\(list.id)")
                         }
                         .buttonStyle(.plain)
+                        .simultaneousGesture(
+                            LongPressGesture(minimumDuration: 0.7)
+                                .onEnded({ _ in
+                                    self.viewModel.selectedList = list
+                                    self.viewModel.showSheet = true
+                                })
+                        )
                     }
                 }
                 .padding()
