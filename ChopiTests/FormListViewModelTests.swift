@@ -64,6 +64,26 @@ final class FormListViewModelTests: XCTestCase {
             }
         }
         await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertNil(viewModel.shoppingList)
+        XCTAssertFalse(viewModel.loading)
+    }
+    
+    func testUpdateList() async {
+        viewModel = FormListViewModel(mockDatabaseService)
+        let expectation = XCTestExpectation(description: "Update list in database")
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 2)
+        viewModel.shoppingList = list
+        viewModel.name = "Update Test List"
+        
+        Task {
+            viewModel.saveNewList {
+                expectation.fulfill()
+            }
+        }
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertNotNil(viewModel.shoppingList)
         XCTAssertFalse(viewModel.loading)
     }
 }

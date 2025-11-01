@@ -11,7 +11,7 @@ class FormListViewModel: ObservableObject {
     @Published var loading = false
     @Published var name: String = ""
     
-    let shoppingList : ShoppingList?
+    var shoppingList : ShoppingList?
     let databaseService: DatabaseServiceProtocol
     private let characterLimit: Int = 50
     
