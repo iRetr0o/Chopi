@@ -30,9 +30,9 @@ final class FormListViewModelIntegrationTests: XCTestCase {
         super.tearDown()
     }
     
-    func testSaveNewList() async {
-        viewModel.name = "Test List"
+    func testSaveNewList_NewList() async {
         let expectation = XCTestExpectation(description: "Save a new list to database")
+        viewModel.name = "Test List"
         
         Task {
             viewModel.saveNewList {
@@ -40,6 +40,36 @@ final class FormListViewModelIntegrationTests: XCTestCase {
             }
         }
         await fulfillment(of: [expectation], timeout: 2.0)
+        
+        XCTAssertNil(viewModel.shoppingList)
+        XCTAssertFalse(viewModel.loading)
+    }
+    
+    func testSaveNewList_UpdateList() async {
+        let saveExpectation = XCTestExpectation(description: "Save a new list in database")
+        let updateExpectation = XCTestExpectation(description: "Update existing list in database")
+        viewModel.name = "Test List"
+        
+        Task {
+            viewModel.saveNewList {
+                saveExpectation.fulfill()
+            }
+        }
+        await fulfillment(of: [saveExpectation], timeout: 2.0)
+        
+        viewModel.name = "Updated Test List"
+        viewModel.shoppingList = await databaseService.fetchLists().first
+        
+        Task {
+            viewModel.saveNewList {
+                updateExpectation.fulfill()
+            }
+        }
+        await fulfillment(of: [updateExpectation], timeout: 2.0)
+        viewModel.shoppingList = await databaseService.fetchLists().first
+        
+        XCTAssertNotNil(viewModel.shoppingList)
+        XCTAssertEqual(viewModel.shoppingList!.name, "Updated Test List")
         XCTAssertFalse(viewModel.loading)
     }
     
