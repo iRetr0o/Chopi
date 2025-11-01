@@ -53,10 +53,10 @@ final class FormListViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.name.count, 0)
     }
     
-    func testSaveNewList() async {
+    func testSaveNewList_NewList() async {
+        let expectation = XCTestExpectation(description: "Save new list in database")
         viewModel = FormListViewModel(mockDatabaseService)
         viewModel.name = "Test List"
-        let expectation = XCTestExpectation(description: "Save new list in database")
         
         Task {
             viewModel.saveNewList {
@@ -69,12 +69,10 @@ final class FormListViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.loading)
     }
     
-    func testUpdateList() async {
-        viewModel = FormListViewModel(mockDatabaseService)
+    func testSaveNewList_UpdateList() async {
         let expectation = XCTestExpectation(description: "Update list in database")
         let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 2)
-        viewModel.shoppingList = list
-        viewModel.name = "Update Test List"
+        viewModel = FormListViewModel(mockDatabaseService, shoppingList: list)
         
         Task {
             viewModel.saveNewList {
@@ -84,6 +82,7 @@ final class FormListViewModelTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 1.0)
         
         XCTAssertNotNil(viewModel.shoppingList)
+        XCTAssertEqual(viewModel.name, list.name)
         XCTAssertFalse(viewModel.loading)
     }
 }
