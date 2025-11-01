@@ -47,4 +47,20 @@ final class HomeViewUITests: XCTestCase {
         let detailView = app.buttons["AddItemButton"]
         XCTAssertTrue(detailView.waitForExistence(timeout: 3.0))
     }
+    
+    func testEditList_ShowFormListView() {
+        let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
+        XCTAssertTrue(firstList.exists)
+        
+        firstList.press(forDuration: 1.0)
+        
+        let editListSheet = app.staticTexts["FormListTitle"]
+        let nameTextField = app.textFields["ListNameTextField"]
+        let saveListButton = app.buttons["SaveListButton"]
+
+        XCTAssertTrue(editListSheet.waitForExistence(timeout: 3.0))
+        XCTAssertTrue(nameTextField.waitForExistence(timeout: 3.0))
+        XCTAssertTrue(saveListButton.waitForExistence(timeout: 3.0))
+        XCTAssertEqual(nameTextField.value as? String, "Lista 1")
+    }
 }

@@ -21,6 +21,7 @@ struct FormListView: View {
                 .onChange(of: self.viewModel.name) {
                     self.viewModel.validateName()
                 }
+                .accessibilityIdentifier("ListNameTextField")
             Spacer()
             Button {
                 self.viewModel.saveNewList {
