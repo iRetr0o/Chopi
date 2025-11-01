@@ -43,8 +43,18 @@ final class SDDatabaseServiceTests: XCTestCase {
         
         let fetchedList = await databaseService.fetchLists()
         XCTAssertTrue(fetchedList.contains { $0.id == list.id })
+    }
+    
+    func testUpdateList() async {
+        let list = ShoppingList(id: UUID().uuidString, name: "Test List", createdAt: Date(), itemCount: 0)
+        _ = await self.databaseService.saveList(list)
         
+        let updatedList = ShoppingList(id: list.id, name: "Updated Test List", createdAt: list.createdAt, itemCount: list.itemCount)
+        let updateSuccess = await self.databaseService.saveList(updatedList)
+        XCTAssertTrue(updateSuccess)
         
+        let fetchedList = await databaseService.fetchLists()
+        XCTAssertTrue(fetchedList.contains { $0.id == updatedList.id && $0.name == updatedList.name })
     }
     
     private func clearDatabase() async {
