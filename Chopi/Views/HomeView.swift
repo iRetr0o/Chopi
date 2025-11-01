@@ -61,7 +61,7 @@ struct HomeView: View {
                     .resizable()
                     .frame(width: 100, height: 150)
                     .padding(.bottom)
-                Text("Aun no tienes listas, inteta")
+                Text("Aun no tienes listas, intenta")
                 Button {
                     self.viewModel.showSheet = true
                 } label: {
