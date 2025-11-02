@@ -10,6 +10,7 @@ import Foundation
 class FormListViewModel: ObservableObject {
     @Published var loading = false
     @Published var name: String = ""
+    @Published var showDeleteConfirmation = false
     
     var shoppingList : ShoppingList?
     let databaseService: DatabaseServiceProtocol
@@ -68,6 +69,25 @@ class FormListViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func deleteList(completion: @escaping () -> Void) {
+        guard let shoppingList else { return }
+        self.loading = true
+        
+        Task {
+            let deleted = await self.databaseService.deleteList(shoppingList)
+            if deleted {
+                await MainActor.run {
+                    self.loading = false
+                    completion()
+                }
+            }
+        }
+    }
+    
+    func showDeleteListAlert() {
+        self.showDeleteConfirmation = true
     }
     
     private func setUpInfoIfNeeded() {

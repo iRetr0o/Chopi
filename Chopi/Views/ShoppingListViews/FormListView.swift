@@ -41,6 +41,27 @@ struct FormListView: View {
         .navigationTitle(self.viewModel.navigationTitle)
         .navigationBarTitleDisplayMode(.inline)
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                if viewModel.shoppingList != nil {
+                    Button(role: .destructive) {
+                        self.viewModel.showDeleteListAlert()
+                    } label: {
+                        Label("Eliminar lista", systemImage: "trash")
+                    }
+                }
+            }
+        }
+        .alert("Eliminar lista", isPresented: self.$viewModel.showDeleteConfirmation) {
+            Button("Cancelar", role: .cancel) { }
+            Button("Eliminar", role: .destructive) {
+                self.viewModel.deleteList {
+                    dismiss()
+                }
+            }
+        } message: {
+            Text("¿Eliminar esta lista? Se borrarán todos los productos y no podrás deshacer esta acción.")
+        }
     }
 }
 
