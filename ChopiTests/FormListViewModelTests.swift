@@ -85,4 +85,19 @@ final class FormListViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.name, list.name)
         XCTAssertFalse(viewModel.loading)
     }
+    
+    func testDeleteList() async {
+        let expectation = XCTestExpectation(description: "Delete list from database")
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        viewModel = FormListViewModel(mockDatabaseService, shoppingList: list)
+        
+        Task {
+            viewModel.deleteList {
+                expectation.fulfill()
+            }
+        }
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertFalse(viewModel.loading)
+    }
 }
