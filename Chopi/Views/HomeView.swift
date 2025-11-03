@@ -35,19 +35,19 @@ struct HomeView: View {
                 }
                 .accessibilityIdentifier("AddListButton")
             }
-        }
-        .onAppear() {
-            self.viewModel.getInitialData()
-        }
-        .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
-            self.viewModel.selectedList = nil
-            self.viewModel.getInitialData()
-        }) {
-            NavigationStack {
-                FormListView(viewModel: FormListViewModel(self.viewModel.databaseService, shoppingList: self.viewModel.selectedList))
+            .onAppear() {
+                self.viewModel.getInitialData()
             }
-            .presentationDetents([.fraction(0.4)])
-            .presentationDragIndicator(.visible)
+            .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
+                self.viewModel.selectedList = nil
+                self.viewModel.getInitialData()
+            }) {
+                NavigationStack {
+                    FormListView(viewModel: FormListViewModel(self.viewModel.databaseService, shoppingList: self.viewModel.selectedList))
+                }
+                .presentationDetents([.fraction(0.4)])
+                .presentationDragIndicator(.visible)
+            }
         }
     }
     
