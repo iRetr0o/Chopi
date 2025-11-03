@@ -75,11 +75,12 @@ class SDDatabaseService: DatabaseServiceProtocol {
     }
     
     func fetchItems(for listId: String) async -> [Item] {
-        let predicate = #Predicate<SDItem> { $0.list.id == listId }
-        let descriptor = FetchDescriptor<SDItem>(predicate: predicate)
+        let predicate = #Predicate<SDShoppingList> { $0.id == listId }
+        let descriptor = FetchDescriptor<SDShoppingList>(predicate: predicate)
         do {
-            let sdItems = try context.fetch(descriptor)
-            return sdItems.map { $0.toItem() }
+            let sdLists = try context.fetch(descriptor)
+            guard let sdList = sdLists.first else { return [] }
+            return sdList.items.map { $0.toItem() }
         } catch {
             return []
         }
@@ -90,7 +91,8 @@ class SDDatabaseService: DatabaseServiceProtocol {
         let descriptor = FetchDescriptor<SDShoppingList>(predicate: predicate)
         
         do {
-            guard let sdList = try context.fetch(descriptor).first else { return false }
+            let sdLists = try context.fetch(descriptor)
+            guard let sdList = sdLists.first else { return false }
             let sdItem = SDItem(id: item.id, name: item.name, quantity: item.quantity, isPurchased: item.isPurchased, createdAt: item.createdAt, list: sdList)
             context.insert(sdItem)
             try context.save()
