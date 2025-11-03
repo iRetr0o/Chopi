@@ -15,7 +15,7 @@ class SDItem {
     var quantity: Int
     var isPurchased: Bool
     var createdAt: Date
-    @Relationship(inverse: \SDShoppingList.items) var list: SDShoppingList
+    var list: SDShoppingList
     
     init(id: String, name: String, quantity: Int, isPurchased: Bool, createdAt: Date, list: SDShoppingList) {
         self.id = id

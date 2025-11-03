@@ -13,7 +13,7 @@ class SDShoppingList {
     @Attribute(.unique) var id: String
     var name: String
     var createdAt: Date
-    @Relationship(deleteRule: .cascade) var items: [SDItem] = []
+    @Relationship(deleteRule: .cascade, inverse: \SDItem.list) var items: [SDItem] = []
     
     init(id: String, name: String, createdAt: Date) {
         self.id = id
