@@ -57,6 +57,28 @@ final class SDDatabaseServiceTests: XCTestCase {
         XCTAssertTrue(fetchedList.contains { $0.id == updatedList.id && $0.name == updatedList.name })
     }
     
+    func testDeleteList_RemovesList() async {
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        _ = await self.databaseService.saveList(list)
+        
+        let deletedList = await self.databaseService.deleteList(list)
+        XCTAssertTrue(deletedList)
+    }
+    
+    func testDeleteList_RemovesAssociatedItems() async {
+        let list = ShoppingList(id: "1", name: "Test List with items", createdAt: Date(), itemCount: 0)
+        _ = await self.databaseService.saveList(list)
+        
+        let item = Item(id: "1", name: "Test Item", quantity: 1, isPurchased: false, createdAt: Date(), listId: list.id)
+        _ = await self.databaseService.saveItem(for: item.listId, item: item)
+        
+        let deletedList = await self.databaseService.deleteList(list)
+        XCTAssertTrue(deletedList)
+        
+        let remainingItems = await self.databaseService.fetchItems(for: list.id)
+        XCTAssertTrue(remainingItems.isEmpty)
+    }
+    
     private func clearDatabase() async {
         let allList = await databaseService.fetchLists()
         for list in allList {
