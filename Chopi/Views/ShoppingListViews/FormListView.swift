@@ -44,11 +44,12 @@ struct FormListView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 if viewModel.shoppingList != nil {
-                    Button(role: .destructive) {
+                    Button {
                         self.viewModel.showDeleteListAlert()
                     } label: {
                         Label("Eliminar lista", systemImage: "trash")
                     }
+                    .tint(.red)
                     .accessibilityIdentifier("DeleteListButton")
                 }
             }
