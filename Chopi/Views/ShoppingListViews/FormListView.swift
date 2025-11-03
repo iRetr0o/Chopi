@@ -49,6 +49,7 @@ struct FormListView: View {
                     } label: {
                         Label("Eliminar lista", systemImage: "trash")
                     }
+                    .accessibilityIdentifier("DeleteListButton")
                 }
             }
         }

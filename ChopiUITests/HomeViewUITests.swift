@@ -63,4 +63,18 @@ final class HomeViewUITests: XCTestCase {
         XCTAssertTrue(saveListButton.waitForExistence(timeout: 3.0))
         XCTAssertEqual(nameTextField.value as? String, "Lista 1")
     }
+    
+    // NOTE: Review test in case the title changes
+    func testDeleteButtonShowsAlert() {
+        let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
+        XCTAssertTrue(firstList.exists)
+        
+        firstList.press(forDuration: 1.0)
+        
+        let deleteButton = app.buttons["DeleteListButton"]
+        XCTAssertTrue(deleteButton.waitForExistence(timeout: 3.0))
+        
+        deleteButton.tap()
+        XCTAssertTrue(app.alerts["Eliminar lista"].waitForExistence(timeout: 3.0))
+    }
 }
