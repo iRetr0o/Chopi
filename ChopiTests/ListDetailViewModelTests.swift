@@ -27,9 +27,9 @@ final class ListDetailViewModelTests: XCTestCase {
     }
     
     func testGetItems() async {
-        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 2)
-        viewModel = ListDetailViewModel(mockDatabaseService, shoppingList: list)
         let expectation = XCTestExpectation(description: "Fetched Items from database")
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        viewModel = ListDetailViewModel(mockDatabaseService, shoppingList: list)
         
         Task {
             viewModel.getItems()
@@ -44,7 +44,7 @@ final class ListDetailViewModelTests: XCTestCase {
     
     func testUpdateItemStatus() async {
         let expectation = XCTestExpectation(description: "Updated Item in database")
-        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 2)
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 1)
         let item = Item(id: "1", name: "Test Item", quantity: 1, isPurchased: false, createdAt: Date(), listId: list.id)
         let items = [item]
         viewModel = ListDetailViewModel(mockDatabaseService, shoppingList: list)
