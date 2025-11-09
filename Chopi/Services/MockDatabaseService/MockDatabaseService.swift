@@ -46,7 +46,7 @@ class MockDatabaseService: DatabaseServiceProtocol {
         return fetchItemsResult.filter { $0.listId == listId }
     }
     
-    func saveItem(for listId: String, item: Item) async -> Bool {
+    func saveItem(_ item: Item) async -> Bool {
         return saveItemResult
     }
     

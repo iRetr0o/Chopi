@@ -28,7 +28,7 @@ class StubDatabaseService: DatabaseServiceProtocol {
         return []
     }
     
-    func saveItem(for listId: String, item: Item) async -> Bool {
+    func saveItem(_ item: Item) async -> Bool {
         return false
     }
     

@@ -86,7 +86,8 @@ class SDDatabaseService: DatabaseServiceProtocol {
         }
     }
     
-    func saveItem(for listId: String, item: Item) async -> Bool {
+    func saveItem(_ item: Item) async -> Bool {
+        let listId = item.listId
         let predicate = #Predicate<SDShoppingList> { $0.id == listId }
         let descriptor = FetchDescriptor<SDShoppingList>(predicate: predicate)
         

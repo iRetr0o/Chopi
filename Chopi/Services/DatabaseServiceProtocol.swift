@@ -16,7 +16,7 @@ protocol DatabaseServiceProtocol {
     
     // MARK: - Items
     func fetchItems(for listId: String) async -> [Item]
-    func saveItem(for listId: String, item: Item) async -> Bool
+    func saveItem(_ item: Item) async -> Bool
     func updateItem(_ item: Item) async -> Bool
     func deleteItem(_ item: Item) async -> Bool
 }

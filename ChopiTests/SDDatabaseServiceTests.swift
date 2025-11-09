@@ -70,7 +70,7 @@ final class SDDatabaseServiceTests: XCTestCase {
         _ = await self.databaseService.saveList(list)
         
         let item = Item(id: "1", name: "Test Item", quantity: 1, isPurchased: false, createdAt: Date(), listId: list.id)
-        _ = await self.databaseService.saveItem(for: item.listId, item: item)
+        _ = await self.databaseService.saveItem(item)
         
         let deletedList = await self.databaseService.deleteList(list)
         XCTAssertTrue(deletedList)

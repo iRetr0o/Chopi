@@ -31,7 +31,7 @@ class FormItemViewModel: ObservableObject {
         self.loading = true
         let itemToSave = Item(id: UUID().uuidString, name: self.name, quantity: self.quantity, isPurchased: self.isPurchased, createdAt: Date(), listId: shoppingList.id)
         Task {
-            let saved = await self.databaseService.saveItem(for: shoppingList.id, item: itemToSave)
+            let saved = await self.databaseService.saveItem(itemToSave)
             if saved {
                 await MainActor.run {
                     self.loading = false
