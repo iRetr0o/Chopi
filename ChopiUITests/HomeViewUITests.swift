@@ -77,4 +77,14 @@ final class HomeViewUITests: XCTestCase {
         deleteButton.tap()
         XCTAssertTrue(app.alerts["Eliminar lista"].waitForExistence(timeout: 3.0))
     }
+    
+    func testListDetailView_ShowItems() {
+        let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
+        XCTAssertTrue(firstList.exists)
+        
+        firstList.tap()
+        
+        let firstItem = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'Item_'")).firstMatch
+        XCTAssertTrue(firstItem.waitForExistence(timeout: 3.0))
+    }
 }

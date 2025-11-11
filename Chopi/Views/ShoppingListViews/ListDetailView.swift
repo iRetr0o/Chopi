@@ -17,6 +17,7 @@ struct ListDetailView: View {
                     self.viewModel.item = item
                     self.viewModel.updateItemStatus()
                 }
+                .accessibilityIdentifier("Item_\(item.id)")
             }
         }
         .onAppear {
