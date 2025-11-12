@@ -64,7 +64,7 @@ final class HomeViewUITests: XCTestCase {
         XCTAssertEqual(nameTextField.value as? String, "Lista 1")
     }
     
-    // NOTE: Review test in case the title changes
+    // NOTE: Review test in case the alert title changes
     func testDeleteButtonShowsAlert() {
         let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
         XCTAssertTrue(firstList.exists)
@@ -86,5 +86,20 @@ final class HomeViewUITests: XCTestCase {
         
         let firstItem = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'Item_'")).firstMatch
         XCTAssertTrue(firstItem.waitForExistence(timeout: 3.0))
+    }
+    
+    func testNavigationToFormItem() {
+        let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
+        XCTAssertTrue(firstList.exists)
+        
+        firstList.tap()
+        
+        let addItemButton = app.buttons["AddItemButton"]
+        XCTAssertTrue(addItemButton.waitForExistence(timeout: 3.0))
+        
+        addItemButton.tap()
+        
+        let saveItemButton = app.buttons["SaveItemButton"]
+        XCTAssertTrue(saveItemButton.waitForExistence(timeout: 3.0))
     }
 }

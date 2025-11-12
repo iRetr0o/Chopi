@@ -14,10 +14,12 @@ struct FormItemView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Nombre del producto")
+                .accessibilityIdentifier("FormItemTitle")
             TextField(text: self.$viewModel.name) {
                 Text("Obligatorio")
                     .italic()
             }
+            .accessibilityIdentifier("ItemNameTextField")
             Divider()
             HStack {
                 Text("Cantidad:")
@@ -45,6 +47,7 @@ struct FormItemView: View {
                     .background(RoundedRectangle(cornerRadius: 10).fill(self.viewModel.isButtonDisabled ? .blue : .gray.opacity(0.2)))
             }
             .disabled(!self.viewModel.isButtonDisabled)
+            .accessibilityIdentifier("SaveItemButton")
         }
         .padding()
     }
