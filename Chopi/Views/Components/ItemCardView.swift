@@ -8,34 +8,42 @@
 import SwiftUI
 
 struct ItemCardView: View {
-    let isPurchased: Bool
-    let name: String
-    let quantity: Int
-    let actionOnTap: () -> Void
+    let item: Item
+    let isUpdating: Bool
+    let onToggle: () -> Void
     
     var body: some View {
         HStack {
-            Image(systemName: isPurchased ? "checkmark.circle.fill" : "circle")
-                .resizable()
-                .frame(width: 30, height: 30)
-                .padding(.trailing)
-                .foregroundStyle(isPurchased ? .green : .black)
-                .onTapGesture {
-                    actionOnTap()
+            Button {
+                onToggle()
+            } label: {
+                if isUpdating {
+                    ProgressView()
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing)
+                } else {
+                    Image(systemName: item.isPurchased ? "checkmark.circle.fill" : "circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .padding(.trailing)
+                        .foregroundStyle(item.isPurchased ? .green : .gray)
                 }
+            }
+            .buttonStyle(.plain)
             VStack(alignment: .leading) {
-                Text(name)
+                Text(item.name)
                     .font(.headline)
                     .padding(.bottom)
-                Text("Cantidad: \(quantity)")
+                Text("Cantidad: \(item.quantity)")
                     .font(.subheadline)
             }
             Spacer()
             Image(systemName: "chevron.right")
         }
+        .opacity(isUpdating ? 0.6 : 1.0)
     }
 }
 
 #Preview {
-    ItemCardView(isPurchased: false, name: "Producto 1", quantity: 10, actionOnTap: { print("Tapped") })
+    ItemCardView(item: Item(id: "1", name: "Producto 1", quantity: 1, isPurchased: false, createdAt: Date(), listId: "1"), isUpdating: false, onToggle: { print("Tapped") })
 }

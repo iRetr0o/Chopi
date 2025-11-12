@@ -13,7 +13,7 @@ struct ListDetailView: View {
     var body: some View {
         List {
             ForEach(self.viewModel.items) { item in
-                ItemCardView(isPurchased: item.isPurchased, name: item.name, quantity: item.quantity) {
+                ItemCardView(item: item, isUpdating: self.viewModel.loadingItem == item.id) {
                     self.viewModel.item = item
                     self.viewModel.updateItemStatus()
                 }

@@ -9,6 +9,7 @@ import Foundation
 
 class ListDetailViewModel: ObservableObject {
     @Published var loading: Bool = false
+    @Published var loadingItem: String?
     @Published var showDetails: Bool = false
     
     var items: [Item] = []
@@ -40,17 +41,16 @@ class ListDetailViewModel: ObservableObject {
             let item,
             let index = self.items.firstIndex(where: { $0.id == item.id })
         else { return }
-        self.loading = true
+        self.loadingItem = item.id
         
         let updatedItem = Item(id: item.id, name: item.name, quantity: item.quantity, isPurchased: !item.isPurchased, createdAt: item.createdAt, listId: item.listId)
-    
-        items[index] = updatedItem
 
         Task {
             let saved = await self.databaseService.updateItem(updatedItem)
             if saved {
                 await MainActor.run {
-                    self.loading = false
+                    items[index] = updatedItem
+                    self.loadingItem = nil
                 }
             }
         }
