@@ -17,17 +17,17 @@ struct ItemCardView: View {
             Button {
                 onToggle()
             } label: {
-                if isUpdating {
-                    ProgressView()
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing)
-                } else {
-                    Image(systemName: item.isPurchased ? "checkmark.circle.fill" : "circle")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing)
-                        .foregroundStyle(item.isPurchased ? .green : .gray)
+                Group {
+                    if isUpdating {
+                        ProgressView()
+                    } else {
+                        Image(systemName: item.isPurchased ? "checkmark.circle.fill" : "circle")
+                            .resizable()
+                            .foregroundStyle(item.isPurchased ? .green : .gray)
+                    }
                 }
+                .frame(width: 30, height: 30)
+                .padding(.trailing)
             }
             .buttonStyle(.plain)
             VStack(alignment: .leading) {
