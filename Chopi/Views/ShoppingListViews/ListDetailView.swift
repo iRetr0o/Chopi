@@ -11,15 +11,7 @@ struct ListDetailView: View {
     @StateObject var viewModel: ListDetailViewModel
     
     var body: some View {
-        List {
-            ForEach(self.viewModel.items) { item in
-                ItemCardView(item: item, isUpdating: self.viewModel.loadingItem == item.id) {
-                    self.viewModel.item = item
-                    self.viewModel.updateItemStatus()
-                }
-                .accessibilityIdentifier("Item_\(item.id)")
-            }
-        }
+        itemsScreen
         .onAppear {
             self.viewModel.getInitialData()
         }
@@ -36,6 +28,36 @@ struct ListDetailView: View {
                     Label("Agregar prodcuto", systemImage: "plus")
                 }
                 .accessibilityIdentifier("AddItemButton")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var itemsScreen: some View {
+        if self.viewModel.loading {
+            LoadingView()
+        } else if self.viewModel.items.isEmpty {
+            VStack {
+                Image(systemName: "checklist")
+                    .font(.system(size: 80))
+                    .padding(.bottom)
+                Text("Aun no tienes productos, intenta")
+                Button {
+                    self.viewModel.showDetails = true
+                } label: {
+                    Text("Agregar uno")
+                }
+            }
+            .padding(.bottom)
+        } else {
+            List {
+                ForEach(self.viewModel.items) { item in
+                    ItemCardView(item: item, isUpdating: self.viewModel.loadingItem == item.id) {
+                        self.viewModel.item = item
+                        self.viewModel.updateItemStatus()
+                    }
+                    .accessibilityIdentifier("Item_\(item.id)")
+                }
             }
         }
     }
