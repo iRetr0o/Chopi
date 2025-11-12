@@ -8,7 +8,7 @@
 import XCTest
 @testable import Chopi
 
-final class FormItemViewTests: XCTestCase {
+final class FormItemViewModelTests: XCTestCase {
     var viewModel: FormItemViewModel!
     var mockDatabaseService: MockDatabaseService!
     var stubDatabaseService: StubDatabaseService!
