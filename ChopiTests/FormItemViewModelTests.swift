@@ -26,6 +26,36 @@ final class FormItemViewModelTests: XCTestCase {
         super.tearDown()
     }
     
+    func testValidateName_truncatesNameWhenExceedsCharacterLimit() {
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        viewModel = FormItemViewModel(StubDatabaseService(),shoppingList: list)
+        viewModel.name = String(repeating: "a", count: 40)
+        viewModel.validateName()
+        
+        XCTAssertEqual(viewModel.name.count, 30)
+    }
+    
+    func testValidateName_doesNotModifyNameWhenWithinCharacterLimit() {
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        let originalName = "Valid Name"
+        viewModel = FormItemViewModel(StubDatabaseService(), shoppingList: list)
+        viewModel.name = originalName
+        viewModel.validateName()
+        
+        XCTAssertEqual(viewModel.name, originalName)
+        XCTAssertEqual(viewModel.name.count, 10)
+    }
+    
+    func testValidateName_handlesEmptyNamesCorrectly() {
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        viewModel = FormItemViewModel(StubDatabaseService(), shoppingList: list)
+        viewModel.name = ""
+        viewModel.validateName()
+        
+        XCTAssertEqual(viewModel.name, "")
+        XCTAssertEqual(viewModel.name.count, 0)
+    }
+    
     func testSaveNewItem() async {
         let expectation = XCTestExpectation(description: "Save new item in database")
         let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
