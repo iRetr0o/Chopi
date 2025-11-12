@@ -16,7 +16,8 @@ class FormItemViewModel: ObservableObject {
     let item: Item?
     let shoppingList: ShoppingList
     let databaseService: DatabaseServiceProtocol
-    
+    private let characterLimit: Int = 30
+
     init(_ databaseService: DatabaseServiceProtocol, shoppingList: ShoppingList, item: Item? = nil) {
         self.databaseService = databaseService
         self.shoppingList = shoppingList
@@ -25,6 +26,12 @@ class FormItemViewModel: ObservableObject {
     
     var isButtonDisabled: Bool {
         return !name.isEmpty
+    }
+    
+    func validateName() {
+        if name.count > characterLimit {
+            name = String(name.prefix(characterLimit))
+        }
     }
     
     func saveNewItem(completion: @escaping () -> Void) {

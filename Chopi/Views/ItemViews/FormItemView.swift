@@ -19,6 +19,9 @@ struct FormItemView: View {
                 Text("Obligatorio")
                     .italic()
             }
+            .onChange(of: self.viewModel.name) {
+                self.viewModel.validateName()
+            }
             .accessibilityIdentifier("ItemNameTextField")
             Divider()
             HStack {
