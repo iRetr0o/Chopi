@@ -90,6 +90,18 @@ final class SDDatabaseServiceTests: XCTestCase {
         XCTAssertGreaterThan(fetchItems.count, 0)
     }
     
+    func testSaveItem() async {
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        _ = await self.databaseService.saveList(list)
+        
+        let item = Item(id: "1", name: "Test Item", quantity: 1, isPurchased: true, createdAt: Date(), listId: list.id)
+        let success = await self.databaseService.saveItem(item)
+        XCTAssertTrue(success)
+
+        let fetchedItem = await databaseService.fetchItems(for: list.id)
+        XCTAssertTrue(fetchedItem.contains { $0.id == item.id })
+    }
+    
     private func clearDatabase() async {
         let allList = await databaseService.fetchLists()
         for list in allList {
