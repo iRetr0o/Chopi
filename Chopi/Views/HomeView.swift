@@ -16,20 +16,18 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: self.$viewModel.path) {
             homeScreen
             .navigationTitle("Listas de compras")
-            .navigationDestination(isPresented: self.$viewModel.showDetails, destination: {
-                if let selectedList = self.viewModel.selectedList {
-                    ListDetailView(viewModel: ListDetailViewModel(self.viewModel.databaseService, shoppingList: selectedList))
-                        .onDisappear {
-                            self.viewModel.selectedList = nil
-                        }
+            .navigationDestination(for: HomeNavigationRoute.self, destination: { route in
+                switch route {
+                case .listDetail(let list):
+                    ListDetailView(viewModel: ListDetailViewModel(self.viewModel.databaseService, shoppingList: list))
                 }
             })
             .toolbar {
                 Button {
-                    self.viewModel.showSheet = true
+                    self.viewModel.newList()
                 } label: {
                     Label("Agregar lista", systemImage: "plus")
                 }
@@ -38,12 +36,16 @@ struct HomeView: View {
             .onAppear() {
                 self.viewModel.getInitialData()
             }
-            .sheet(isPresented: self.$viewModel.showSheet, onDismiss: {
-                self.viewModel.selectedList = nil
+            .sheet(item: self.$viewModel.sheet, onDismiss: {
                 self.viewModel.getInitialData()
-            }) {
+            }) { item in
                 NavigationStack {
-                    FormListView(viewModel: FormListViewModel(self.viewModel.databaseService, shoppingList: self.viewModel.selectedList))
+                    switch item {
+                    case .newList:
+                        FormListView(viewModel: FormListViewModel(self.viewModel.databaseService))
+                    case .updateList(let list):
+                        FormListView(viewModel: FormListViewModel(self.viewModel.databaseService, shoppingList: list))
+                    }
                 }
                 .presentationDetents([.fraction(0.4)])
                 .presentationDragIndicator(.visible)
@@ -63,7 +65,7 @@ struct HomeView: View {
                     .padding(.bottom)
                 Text("Aun no tienes listas, intenta")
                 Button {
-                    self.viewModel.showSheet = true
+                    self.viewModel.newList()
                 } label: {
                     Text("Crear una nueva lista")
                 }
@@ -74,8 +76,7 @@ struct HomeView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(self.viewModel.shoppingLists) { list in
                         Button(action: {
-                            self.viewModel.selectedList = list
-                            self.viewModel.showDetails = true
+                            self.viewModel.goToDetail(list)
                         }) {
                             ListCardView(name: list.name, totalItems: list.itemCount, date: list.createdAt)
                                 .accessibilityIdentifier("List_\(list.id)")
@@ -84,8 +85,7 @@ struct HomeView: View {
                         .simultaneousGesture(
                             LongPressGesture(minimumDuration: 0.7)
                                 .onEnded({ _ in
-                                    self.viewModel.selectedList = list
-                                    self.viewModel.showSheet = true
+                                    self.viewModel.sheet = .updateList(list)
                                 })
                         )
                     }

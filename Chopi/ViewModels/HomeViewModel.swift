@@ -7,12 +7,21 @@
 
 import Foundation
 
+enum HomeSheet: Identifiable {
+    var id: String { String(describing: self) }
+    case newList
+    case updateList(_ list: ShoppingList)
+}
+
+enum HomeNavigationRoute: Hashable {
+    case listDetail(_ list: ShoppingList)
+}
+
 class HomeViewModel: ObservableObject {
+    @Published var path = [HomeNavigationRoute]()
     @Published var loading = false
-    @Published var showSheet = false
-    @Published var showDetails = false
+    @Published var sheet: HomeSheet?
     
-    var selectedList: ShoppingList?
     var shoppingLists: [ShoppingList] = []
     let databaseService: DatabaseServiceProtocol
     
@@ -32,5 +41,17 @@ class HomeViewModel: ObservableObject {
                 self.loading = false
             }
         }
+    }
+    
+    func newList() {
+        self.sheet = .newList
+    }
+    
+    func updateList(_ list: ShoppingList) {
+        self.sheet = .updateList(list)
+    }
+    
+    func goToDetail(_ list: ShoppingList) {
+        self.path.append(.listDetail(list))
     }
 }

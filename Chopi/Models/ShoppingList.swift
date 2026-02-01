@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ShoppingList: Identifiable, Equatable {
+struct ShoppingList: Identifiable, Hashable {
     let id: String
     let name: String
     let createdAt: Date
