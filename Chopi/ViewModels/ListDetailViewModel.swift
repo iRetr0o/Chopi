@@ -11,8 +11,8 @@ class ListDetailViewModel: ObservableObject {
     @Published var loading: Bool = false
     @Published var loadingItem: String?
     @Published var showDetails: Bool = false
+    @Published var items: [Item] = []
     
-    var items: [Item] = []
     var item: Item?
     let shoppingList: ShoppingList
     let databaseService: DatabaseServiceProtocol
@@ -29,8 +29,9 @@ class ListDetailViewModel: ObservableObject {
     func getItems() {
         self.loading = true
         Task {
-            self.items = await self.databaseService.fetchItems(for: shoppingList.id)
+            let fetchedItems = await self.databaseService.fetchItems(for: shoppingList.id)
             await MainActor.run {
+                self.items = fetchedItems
                 self.loading = false
             }
         }
@@ -49,7 +50,7 @@ class ListDetailViewModel: ObservableObject {
             let saved = await self.databaseService.updateItem(updatedItem)
             if saved {
                 await MainActor.run {
-                    items[index] = updatedItem
+                    self.items[index] = updatedItem
                     self.loadingItem = nil
                 }
             }
