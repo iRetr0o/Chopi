@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum HomeSheet: Identifiable {
+enum HomeSheet: Identifiable, Equatable {
     var id: String { String(describing: self) }
     case newList
     case updateList(_ list: ShoppingList)
