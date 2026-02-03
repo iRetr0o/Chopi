@@ -14,6 +14,8 @@ struct FormItemView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Nombre del producto")
+                .font(.headline)
+                .padding(.top)
                 .accessibilityIdentifier("FormItemTitle")
             TextField(text: self.$viewModel.name) {
                 Text("Obligatorio")
