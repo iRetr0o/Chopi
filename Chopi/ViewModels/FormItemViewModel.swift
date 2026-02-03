@@ -22,6 +22,7 @@ class FormItemViewModel: ObservableObject {
         self.databaseService = databaseService
         self.shoppingList = shoppingList
         self.item = item
+        self.setUpInfoIfNeeded()
     }
     
     var isButtonDisabled: Bool {
@@ -36,15 +37,43 @@ class FormItemViewModel: ObservableObject {
     
     func saveNewItem(completion: @escaping () -> Void) {
         self.loading = true
-        let itemToSave = Item(id: UUID().uuidString, name: self.name, quantity: self.quantity, isPurchased: self.isPurchased, createdAt: Date(), listId: shoppingList.id)
-        Task {
-            let saved = await self.databaseService.saveItem(itemToSave)
-            if saved {
-                await MainActor.run {
-                    self.loading = false
-                    completion()
+        if let item {
+            let itemToUpdate = Item(id: item.id, name: name, quantity: quantity, isPurchased: isPurchased, createdAt: item.createdAt, listId: item.listId)
+            
+            Task {
+                let saved = await self.databaseService.updateItem(itemToUpdate)
+                if saved {
+                    await MainActor.run {
+                        self.loading = false
+                        completion()
+                    }
+                } else {
+                    // TODO: Mostrar un error
+                    print("Error al guardar")
                 }
             }
+        } else {
+            let itemToSave = Item(id: UUID().uuidString, name: self.name, quantity: self.quantity, isPurchased: self.isPurchased, createdAt: Date(), listId: shoppingList.id)
+            Task {
+                let saved = await self.databaseService.saveItem(itemToSave)
+                if saved {
+                    await MainActor.run {
+                        self.loading = false
+                        completion()
+                    }
+                } else {
+                    // TODO: Mostrar un error
+                    print("Error al guardar")
+                }
+            }
+        }
+    }
+    
+    private func setUpInfoIfNeeded() {
+        if let item {
+            name = item.name
+            quantity = item.quantity
+            isPurchased = item.isPurchased
         }
     }
 }

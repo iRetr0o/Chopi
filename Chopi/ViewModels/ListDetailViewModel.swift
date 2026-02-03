@@ -7,10 +7,16 @@
 
 import Foundation
 
+enum ItemDetailSheet: Identifiable, Hashable {
+    var id: String { String(describing: self) }
+    case newItem(list: ShoppingList)
+    case updateItem(list: ShoppingList, _ item: Item)
+}
+
 class ListDetailViewModel: ObservableObject {
     @Published var loading: Bool = false
     @Published var loadingItem: String?
-    @Published var showDetails: Bool = false
+    @Published var sheet: ItemDetailSheet?
     @Published var items: [Item] = []
     
     var item: Item?
@@ -55,5 +61,13 @@ class ListDetailViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func newItem(shoppingList: ShoppingList) {
+        self.sheet = .newItem(list: shoppingList)
+    }
+    
+    func updateItem(shoppingList: ShoppingList, _ item: Item) {
+        self.sheet = .updateItem(list: shoppingList, item)
     }
 }
