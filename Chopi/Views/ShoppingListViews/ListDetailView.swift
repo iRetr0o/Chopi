@@ -63,19 +63,13 @@ struct ListDetailView: View {
         } else {
             List {
                 ForEach(self.viewModel.items) { item in
-                    ItemCardView(item: item, isUpdating: self.viewModel.loadingItem == item.id) {
-                        self.viewModel.item = item
-                        self.viewModel.updateItemStatus()
-                    }
+                    ItemCardView(item: item, isUpdating:    self.viewModel.loadingItem == item.id, onToggle: {
+                            self.viewModel.item = item
+                            self.viewModel.updateItemStatus()
+                    }, onSelect: {
+                        self.viewModel.updateItem(shoppingList: self.viewModel.shoppingList, item)
+                    })
                     .accessibilityIdentifier("Item_\(item.id)")
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button {
-                            self.viewModel.updateItem(shoppingList: self.viewModel.shoppingList, item)
-                        } label: {
-                            Label("Editar", systemImage: "pencil")
-                        }
-                        .tint(.blue)
-                    }
                 }
             }
         }

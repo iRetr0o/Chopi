@@ -11,6 +11,7 @@ struct ItemCardView: View {
     let item: Item
     let isUpdating: Bool
     let onToggle: () -> Void
+    let onSelect: () -> Void
     
     var body: some View {
         HStack {
@@ -40,10 +41,14 @@ struct ItemCardView: View {
             Spacer()
             Image(systemName: "chevron.right")
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            onSelect()
+        }
         .opacity(isUpdating ? 0.6 : 1.0)
     }
 }
 
 #Preview {
-    ItemCardView(item: Item(id: "1", name: "Producto 1", quantity: 1, isPurchased: false, createdAt: Date(), listId: "1"), isUpdating: false, onToggle: { print("Tapped") })
+    ItemCardView(item: Item(id: "1", name: "Producto 1", quantity: 1, isPurchased: false, createdAt: Date(), listId: "1"), isUpdating: false, onToggle: { print("Tapped") }, onSelect: { print("Selected") })
 }
