@@ -31,7 +31,7 @@ final class FormItemViewModelIntegrationTests: XCTestCase {
         super.tearDown()
     }
     
-    func testSaveNewItem() async {
+    func testSaveNewItem_NewItem() async {
         let expectation = XCTestExpectation(description: "Save new item on database")
         let listExpectation = XCTestExpectation(description: "Save the list on database")
         viewModel.name = "Test Item"
@@ -52,6 +52,43 @@ final class FormItemViewModelIntegrationTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 2.0)
         
         XCTAssertNil(viewModel.item)
+        XCTAssertFalse(viewModel.loading)
+    }
+    
+    func testSaveNewItem_UpdateItem() async {
+        let saveExpectation = XCTestExpectation(description: "Save new item on database")
+        let updateExpectation = XCTestExpectation(description: "Update item on database")
+        let listExpectation = XCTestExpectation(description: "Save the list on database")
+        viewModel.name = "Test Item"
+        viewModel.quantity = 1
+        viewModel.isPurchased = false
+        
+        Task {
+            _ = await self.databaseService.saveList(list)
+            listExpectation.fulfill()
+        }
+        await fulfillment(of: [listExpectation], timeout: 2.0)
+        
+        Task {
+            viewModel.saveNewItem {
+                saveExpectation.fulfill()
+            }
+        }
+        await fulfillment(of: [saveExpectation], timeout: 2.0)
+        
+        viewModel.name = "Updated Test Item"
+        viewModel.item = await databaseService.fetchItems(for: list.id).first
+        
+        Task {
+            viewModel.saveNewItem {
+                updateExpectation.fulfill()
+            }
+        }
+        await fulfillment(of: [updateExpectation], timeout: 2.0)
+        viewModel.item = await databaseService.fetchItems(for: list.id).first
+        
+        XCTAssertNotNil(viewModel.item)
+        XCTAssertEqual(viewModel.item!.name, "Updated Test Item")
         XCTAssertFalse(viewModel.loading)
     }
     

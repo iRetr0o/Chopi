@@ -13,7 +13,7 @@ class FormItemViewModel: ObservableObject {
     @Published var quantity: Int = 1
     @Published var isPurchased: Bool = false
     
-    let item: Item?
+    var item: Item?
     let shoppingList: ShoppingList
     let databaseService: DatabaseServiceProtocol
     private let characterLimit: Int = 30
