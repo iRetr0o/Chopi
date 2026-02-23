@@ -102,4 +102,25 @@ final class HomeViewUITests: XCTestCase {
         let saveItemButton = app.buttons["SaveItemButton"]
         XCTAssertTrue(saveItemButton.waitForExistence(timeout: 3.0))
     }
+    
+    func testEditItem_ShowFormItemView() {
+        let firstList = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'List_'")).firstMatch
+        XCTAssertTrue(firstList.exists)
+        
+        firstList.tap()
+        
+        let firstItem = app.staticTexts.matching(NSPredicate(format: "identifier BEGINSWITH 'Item_'")).firstMatch
+        XCTAssertTrue(firstItem.waitForExistence(timeout: 3.0))
+        
+        firstItem.tap()
+        
+        let editItemSheet = app.staticTexts["FormItemTitle"]
+        let nameTextField = app.textFields["ItemNameTextField"]
+        let saveItemButton = app.buttons["SaveItemButton"]
+        
+        XCTAssertTrue(editItemSheet.waitForExistence(timeout: 3.0))
+        XCTAssertTrue(nameTextField.waitForExistence(timeout: 3.0))
+        XCTAssertTrue(saveItemButton.waitForExistence(timeout: 3.0))
+        XCTAssertEqual(nameTextField.value as? String, "Producto 1")
+    }
 }
