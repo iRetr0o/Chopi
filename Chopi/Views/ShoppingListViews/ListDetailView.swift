@@ -20,15 +20,17 @@ struct ListDetailView: View {
         .sheet(item: self.$viewModel.sheet, onDismiss: {
             self.viewModel.getInitialData()
         }, content: { item in
-            switch item {
-            case .newItem(list: let shoppingList):
-                FormItemView(viewModel: FormItemViewModel(self.viewModel.databaseService, shoppingList: shoppingList))
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.visible)
-            case .updateItem(list: let shoppingList, let item):
-                FormItemView(viewModel: FormItemViewModel(self.viewModel.databaseService, shoppingList: shoppingList, item: item))
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.visible)
+            NavigationStack {
+                switch item {
+                case .newItem(list: let shoppingList):
+                    FormItemView(viewModel: FormItemViewModel(self.viewModel.databaseService, shoppingList: shoppingList))
+                        .presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.visible)
+                case .updateItem(list: let shoppingList, let item):
+                    FormItemView(viewModel: FormItemViewModel(self.viewModel.databaseService, shoppingList: shoppingList, item: item))
+                        .presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.visible)
+                }
             }
         })
         .toolbar {

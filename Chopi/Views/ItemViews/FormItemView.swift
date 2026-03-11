@@ -44,7 +44,7 @@ struct FormItemView: View {
                     dismiss()
                 }
             } label: {
-                Label("Guardar", systemImage: "square.and.pencil")
+                Label("Guardar Producto", systemImage: "square.and.pencil")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
@@ -55,9 +55,36 @@ struct FormItemView: View {
             .accessibilityIdentifier("SaveItemButton")
         }
         .padding()
+        .navigationTitle(self.viewModel.navigationTitle)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                if viewModel.item != nil {
+                    Button {
+                        self.viewModel.showDeleteItemAlert()
+                    } label: {
+                        Label("Eliminar lista", systemImage: "trash")
+                    }
+                    .tint(.red)
+                    .accessibilityIdentifier("DeleteItemButton")
+                }
+            }
+        }
+        .alert("Eliminar producto", isPresented: self.$viewModel.showDeleteConfirmation) {
+            Button("Cancelar", role: .cancel) { }
+            Button("Eliminar", role: .destructive) {
+                self.viewModel.deleteItem {
+                    dismiss()
+                }
+            }
+        } message: {
+            Text("¿Eliminar este producto? Esta acción no se puede deshacer.")
+        }
     }
 }
 
 #Preview {
-    FormItemView(viewModel: FormItemViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0)))
+    NavigationStack {
+        FormItemView(viewModel: FormItemViewModel(MockDatabaseService(), shoppingList: ShoppingList(id: "1", name: "Lista 1", createdAt: Date(), itemCount: 0), item: Item(id: "1", name: "Producto 1", quantity: 1, isPurchased: true, createdAt: Date(), listId: "1")))
+    }
 }

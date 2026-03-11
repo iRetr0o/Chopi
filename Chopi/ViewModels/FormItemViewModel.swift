@@ -12,6 +12,7 @@ class FormItemViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var quantity: Int = 1
     @Published var isPurchased: Bool = false
+    @Published var showDeleteConfirmation = false
     
     var item: Item?
     let shoppingList: ShoppingList
@@ -27,6 +28,10 @@ class FormItemViewModel: ObservableObject {
     
     var isButtonDisabled: Bool {
         return !name.isEmpty
+    }
+    
+    var navigationTitle: String {
+        self.item == nil ? "Crear nuevo producto" : "Actualizar producto"
     }
     
     func validateName() {
@@ -67,6 +72,25 @@ class FormItemViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func deleteItem(completion: @escaping () -> Void) {
+        guard let item else { return }
+        self.loading = true
+        
+        Task {
+            let deleted = await self.databaseService.deleteItem(item)
+            if deleted {
+                await MainActor.run {
+                    self.loading = false
+                    completion()
+                }
+            }
+        }
+    }
+    
+    func showDeleteItemAlert() {
+        self.showDeleteConfirmation = true
     }
     
     private func setUpInfoIfNeeded() {
