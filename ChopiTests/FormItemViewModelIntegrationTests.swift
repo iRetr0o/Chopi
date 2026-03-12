@@ -92,6 +92,40 @@ final class FormItemViewModelIntegrationTests: XCTestCase {
         XCTAssertFalse(viewModel.loading)
     }
     
+    func testDeleteItem() async {
+        let listExpectation = XCTestExpectation(description: "Save the list on database")
+        let saveExpectation = XCTestExpectation(description: "Save new item on database")
+        let deleteExpectation = XCTestExpectation(description: "Delete item from database")
+        viewModel.name = "Test Item"
+        viewModel.quantity = 1
+        viewModel.isPurchased = false
+        
+        Task {
+            _ = await self.databaseService.saveList(list)
+            listExpectation.fulfill()
+        }
+        await fulfillment(of: [listExpectation], timeout: 2.0)
+        
+        Task {
+            viewModel.saveNewItem {
+                saveExpectation.fulfill()
+            }
+        }
+        await fulfillment(of: [saveExpectation], timeout: 2.0)
+        viewModel.item = await databaseService.fetchItems(for: list.id).first
+        
+        Task {
+            viewModel.deleteItem {
+                deleteExpectation.fulfill()
+            }
+        }
+        await fulfillment(of: [deleteExpectation], timeout: 2.0)
+        viewModel.item = await databaseService.fetchItems(for: list.id).first
+        
+        XCTAssertNil(viewModel.item)
+        XCTAssertFalse(viewModel.loading)
+    }
+    
     private func clearDatabase() async {
         let allList = await databaseService.fetchLists()
         for list in allList {
