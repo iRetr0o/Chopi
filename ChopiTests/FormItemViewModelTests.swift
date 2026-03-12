@@ -92,5 +92,20 @@ final class FormItemViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.name, item.name)
         XCTAssertFalse(viewModel.loading)
     }
-
+    
+    func testDeleteItem() async {
+        let expectation = XCTestExpectation(description: "Delete item from database")
+        let list = ShoppingList(id: "1", name: "Test List", createdAt: Date(), itemCount: 0)
+        let item = Item(id: "1", name: "Test Item", quantity: 1, isPurchased: false, createdAt: Date(), listId: list.id)
+        viewModel = FormItemViewModel(MockDatabaseService(), shoppingList: list, item: item)
+        
+        Task {
+            viewModel.deleteItem {
+                expectation.fulfill()
+            }
+        }
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        XCTAssertFalse(viewModel.loading)
+    }
 }
