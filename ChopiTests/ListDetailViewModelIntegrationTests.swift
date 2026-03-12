@@ -41,6 +41,7 @@ final class ListDetailViewModelIntegrationTests: XCTestCase {
         await fulfillment(of: [expectation], timeout: 2.0)
         
         XCTAssertNotNil(viewModel.items, "Items should not be nil")
+        XCTAssertEqual(viewModel.items.count, 0, "Items count should be 0")
     }
     
     private func clearDatabase() async {
