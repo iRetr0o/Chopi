@@ -82,12 +82,14 @@ struct HomeView: View {
                                 .accessibilityIdentifier("List_\(list.id)")
                         }
                         .buttonStyle(.plain)
-                        .simultaneousGesture(
-                            LongPressGesture(minimumDuration: 0.7)
-                                .onEnded({ _ in
-                                    self.viewModel.sheet = .updateList(list)
-                                })
-                        )
+                        .contextMenu {
+                            Button {
+                                self.viewModel.updateList(list)
+                            } label: {
+                                Label("Editar", systemImage: "pencil")
+                            }
+                            .accessibilityIdentifier("EditListButton")
+                        }
                     }
                 }
                 .padding()

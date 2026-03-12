@@ -54,6 +54,11 @@ final class HomeViewUITests: XCTestCase {
         
         firstList.press(forDuration: 1.0)
         
+        let editListButton = app.buttons["EditListButton"]
+        XCTAssertTrue(editListButton.waitForExistence(timeout: 2.0))
+        
+        editListButton.tap()
+        
         let editListSheet = app.staticTexts["FormListTitle"]
         let nameTextField = app.textFields["ListNameTextField"]
         let saveListButton = app.buttons["SaveListButton"]
@@ -70,6 +75,11 @@ final class HomeViewUITests: XCTestCase {
         XCTAssertTrue(firstList.exists)
         
         firstList.press(forDuration: 1.0)
+        
+        let editListButton = app.buttons["EditListButton"]
+        XCTAssertTrue(editListButton.waitForExistence(timeout: 2.0))
+        
+        editListButton.tap()
         
         let deleteButton = app.buttons["DeleteListButton"]
         XCTAssertTrue(deleteButton.waitForExistence(timeout: 3.0))
