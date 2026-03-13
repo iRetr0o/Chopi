@@ -44,6 +44,28 @@ final class ListDetailViewModelIntegrationTests: XCTestCase {
         XCTAssertEqual(viewModel.items.count, 0, "Items count should be 0")
     }
     
+    func testUpdateItemStatus() async {
+        let expectation = XCTestExpectation(description: "Update status from item")
+        let item = Item(id: "1", name: "Purchased Item", quantity: 1, isPurchased: false, createdAt: Date(), listId: "1")
+        
+        viewModel.item = item
+        viewModel.items = [item]
+        
+        _ = await databaseService.saveList(list)
+        _ = await databaseService.saveItem(item)
+        
+        Task {
+            viewModel.updateItemStatus()
+            expectation.fulfill()
+        }
+        await fulfillment(of: [expectation], timeout: 2.0)
+        
+        viewModel.items = await databaseService.fetchItems(for: list.id)
+        
+        XCTAssertTrue(viewModel.items.first!.isPurchased, "Item status should be true")
+        XCTAssertNil(viewModel.loadingItem)
+    }
+    
     private func clearDatabase() async {
         let allList = await databaseService.fetchLists()
         for list in allList {
