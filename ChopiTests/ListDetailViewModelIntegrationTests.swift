@@ -45,14 +45,25 @@ final class ListDetailViewModelIntegrationTests: XCTestCase {
     }
     
     func testUpdateItemStatus() async {
+        let listExpectation = XCTestExpectation(description: "Save list in database")
+        let itemExpectation = XCTestExpectation(description: "Save item in database")
         let expectation = XCTestExpectation(description: "Update status from item")
         let item = Item(id: "1", name: "Purchased Item", quantity: 1, isPurchased: false, createdAt: Date(), listId: "1")
         
         viewModel.item = item
         viewModel.items = [item]
         
-        _ = await databaseService.saveList(list)
-        _ = await databaseService.saveItem(item)
+        Task {
+            _ = await databaseService.saveList(list)
+            listExpectation.fulfill()
+        }
+        await fulfillment(of: [listExpectation], timeout: 2.0)
+        
+        Task {
+            _ = await databaseService.saveItem(item)
+            itemExpectation.fulfill()
+        }
+        await fulfillment(of: [itemExpectation], timeout: 2.0)
         
         Task {
             viewModel.updateItemStatus()
