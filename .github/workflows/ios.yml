@@ -1,0 +1,49 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - develop
+      - feature/*
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+
+    runs-on: macos-latest
+
+    env:
+      SCHEME: Chopi
+      PROJECT: Chopi.xcodeproj
+      DEVICE: "iPhone 15"
+      PLATFORM: "iOS Simulator"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build for testing
+        run: |
+          xcodebuild build-for-testing \
+          -scheme $SCHEME \
+          -project $PROJECT \
+          -destination "platform=$PLATFORM,name=$DEVICE"
+
+      - name: Run Unit Tests
+        run: |
+          xcodebuild test-without-building \
+          -scheme $SCHEME \
+          -project $PROJECT \
+          -testPlan Chopi \
+          -destination "platform=$PLATFORM,name=$DEVICE"
+
+      - name: Run UI Tests (only for PR to main)
+        if: github.event_name == 'pull_request'
+        run: |
+          xcodebuild test-without-building \
+          -scheme $SCHEME \
+          -project $PROJECT \
+          -testPlan ChopiUI \
+          -destination "platform=$PLATFORM,name=$DEVICE"
