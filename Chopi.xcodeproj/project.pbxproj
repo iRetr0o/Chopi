@@ -27,6 +27,8 @@
 		F454A5152E89D5190003368E /* Chopi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chopi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4B41FB32EA831B4003066A1 /* ChopiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChopiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4BB24502EAC9C8500D1697A /* ChopiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChopiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4EE11992F64B53400DCEE1A /* Chopi.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Chopi.xctestplan; sourceTree = "<group>"; };
+		F4EE119A2F64B89B00DCEE1A /* ChopiUI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ChopiUI.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +77,8 @@
 		F454A50C2E89D5190003368E = {
 			isa = PBXGroup;
 			children = (
+				F4EE11992F64B53400DCEE1A /* Chopi.xctestplan */,
+				F4EE119A2F64B89B00DCEE1A /* ChopiUI.xctestplan */,
 				F454A5172E89D5190003368E /* Chopi */,
 				F4B41FB42EA831B4003066A1 /* ChopiTests */,
 				F4BB24512EAC9C8500D1697A /* ChopiUITests */,
