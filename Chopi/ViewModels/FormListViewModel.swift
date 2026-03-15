@@ -22,7 +22,7 @@ class FormListViewModel: ObservableObject {
         self.setUpInfoIfNeeded()
     }
     
-    var isButtonDisabled: Bool {
+    var isButtonEnabled: Bool {
         return !name.isEmpty
     }
     

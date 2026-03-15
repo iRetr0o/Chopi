@@ -33,9 +33,9 @@ struct FormListView: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).fill(self.viewModel.isButtonDisabled ?  Color.blue : Color.gray.opacity(0.2)))
+                    .background(RoundedRectangle(cornerRadius: 10).fill(self.viewModel.isButtonEnabled ?  Color.blue : Color.gray.opacity(0.2)))
             }
-            .disabled(!self.viewModel.isButtonDisabled)
+            .disabled(!self.viewModel.isButtonEnabled)
             .accessibilityIdentifier("SaveListButton")
         }
         .navigationTitle(self.viewModel.navigationTitle)

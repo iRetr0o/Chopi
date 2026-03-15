@@ -49,9 +49,9 @@ struct FormItemView: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 10).fill(self.viewModel.isButtonDisabled ? .blue : .gray.opacity(0.2)))
+                    .background(RoundedRectangle(cornerRadius: 10).fill(self.viewModel.isButtonEnabled ? .blue : .gray.opacity(0.2)))
             }
-            .disabled(!self.viewModel.isButtonDisabled)
+            .disabled(!self.viewModel.isButtonEnabled)
             .accessibilityIdentifier("SaveItemButton")
         }
         .padding()

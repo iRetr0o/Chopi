@@ -26,7 +26,7 @@ class FormItemViewModel: ObservableObject {
         self.setUpInfoIfNeeded()
     }
     
-    var isButtonDisabled: Bool {
+    var isButtonEnabled: Bool {
         return !name.isEmpty
     }
     
