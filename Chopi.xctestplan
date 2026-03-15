@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "0FAB0B5A-7974-4281-9462-A125EA1FE45B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Chopi.xcodeproj",
+      "identifier" : "F454A5142E89D5190003368E",
+      "name" : "Chopi"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:Chopi.xcodeproj",
+        "identifier" : "F4B41FB22EA831B4003066A1",
+        "name" : "ChopiTests"
+      }
+    }
+  ],
+  "version" : 1
+}
