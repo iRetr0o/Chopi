@@ -38,7 +38,7 @@ struct ListDetailView: View {
                 Button {
                     self.viewModel.newItem(shoppingList: self.viewModel.shoppingList)
                 } label: {
-                    Label("Agregar prodcuto", systemImage: "plus")
+                    Label("Agregar producto", systemImage: "plus")
                 }
                 .accessibilityIdentifier("AddItemButton")
             }
