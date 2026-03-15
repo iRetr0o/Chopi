@@ -30,14 +30,11 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:Chopi.xctestplan">
+            reference = "container:Chopi.xctestplan"
+            default = "YES">
          </TestPlanReference>
          <TestPlanReference
             reference = "container:ChopiUI.xctestplan">
-         </TestPlanReference>
-         <TestPlanReference
-            reference = "container:ChopiFull.xctestplan"
-            default = "YES">
          </TestPlanReference>
       </TestPlans>
       <Testables>
