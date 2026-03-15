@@ -63,7 +63,7 @@ struct FormItemView: View {
                     Button {
                         self.viewModel.showDeleteItemAlert()
                     } label: {
-                        Label("Eliminar lista", systemImage: "trash")
+                        Label("Eliminar producto", systemImage: "trash")
                     }
                     .tint(.red)
                     .accessibilityIdentifier("DeleteItemButton")
