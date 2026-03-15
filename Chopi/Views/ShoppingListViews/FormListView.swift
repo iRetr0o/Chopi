@@ -18,7 +18,7 @@ struct FormListView: View {
                 .padding(.bottom)
                 .accessibilityIdentifier("FormListTitle")
             TextField("Despensa", text: self.$viewModel.name)
-                .onChange(of: self.viewModel.name) {
+                .onChange(of: self.viewModel.name) { _, _ in
                     self.viewModel.validateName()
                 }
                 .accessibilityIdentifier("ListNameTextField")
