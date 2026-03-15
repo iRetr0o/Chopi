@@ -59,6 +59,9 @@ class ListDetailViewModel: ObservableObject {
                     self.items[index] = updatedItem
                     self.loadingItem = nil
                 }
+            } else {
+                // TODO: Mostrar un error
+                print("Error al actualizar el estatus")
             }
         }
     }
