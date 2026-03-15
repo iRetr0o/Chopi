@@ -1,5 +1,9 @@
 # Chopi 🛒
-Simple iOS application for managing shopping lists.
+## Language
+[English](README.md) | [Español](README.es.md)
+
+## Description
+Chopi is a simple iOS application for managing shopping lists.
 It allows users to create lists, add products and keep track of purchased items.
 
 This project was built as part of a personal learning process to practice modern iOS development using SwiftUI and MVVM architecture.
