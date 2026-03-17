@@ -3,11 +3,15 @@ name: iOS CI
 on:
   push:
     branches:
+      - main
       - develop
-      - feature/*
+      - 'feature/**'
+      - 'release/**'
+      - 'hotfix/**'
   pull_request:
     branches:
       - main
+      - develop
 
 jobs:
   build-and-test:
@@ -39,8 +43,15 @@ jobs:
           -testPlan Chopi \
           -destination "platform=$PLATFORM,name=$DEVICE"
 
-      - name: Run UI Tests (only for PR to main)
-        if: github.event_name == 'pull_request'
+      - name: Run UI Tests
+        # UI tests in:
+        # - All PRs (to main or develop)
+        # - Push to release/ (exhaustive testing before production)
+        # - Push to hotfix/ (validate critical fix)
+        if: |
+          github.event_name == 'pull_request' ||
+          startsWith(github.ref, 'refs/heads/release/') ||
+          startsWith(github.ref, 'refs/heads/hotfix/')
         run: |
           xcodebuild test-without-building \
           -scheme $SCHEME \
